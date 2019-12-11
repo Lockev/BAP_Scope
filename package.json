@@ -1,5 +1,5 @@
 {
-  "name": "ionia",
+  "name": "scope",
   "version": "1.0.0",
   "description": "Server for france-esport app",
   "main": "server.js",
@@ -7,16 +7,18 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
   },
-  "author": "Heddi Brahiti <heddi@brahiti.fr>",
+  "author": "Guillaume PRIGENT <guillaume-prigent.tk>",
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "ejs": "^2.7.3",
     "express": "^4.17.1",
     "express-validator": "^6.2.0",
     "http-errors": "^1.7.3",
+    "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.0.0",
     "nodemon": "^1.19.4"
   }
