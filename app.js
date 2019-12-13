@@ -2,7 +2,7 @@ var express = require("express");
 var path = require("path");
 var sql = require("./db");
 var bodyParser = require("body-parser");
-var apiRouter = require("./apiRouter").router;
+var apiRouter = require("./routes/users").router;
 
 var app = express();
 

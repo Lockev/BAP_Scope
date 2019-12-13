@@ -1,74 +1,84 @@
-var bcrypt = require("bcrypt-nodejs");
+var express = require("express");
+const { check, validationResult } = require("express-validator");
+var bcrypt = require("bcryptjs");
+var sql = require("../db");
 var jwt = require("jsonwebtoken");
-var controls = require("../controllers/usersCtrl");
-const { check } = require("express-validator");
 
-// Routes
-module.exports = {
-  register: function(req, res) {
-    app.post(
-      "/users/register/",
-      [
-        check("email")
-          .isEmail()
-          .normalizeEmail()
-          .withMessage("Email should not be empty."),
-        check("username")
-          .not()
-          .isEmpty()
-          .isLength({ min: 5, max: 25 })
-          .withMessage("Username must have more than 5 characters and less than 25."),
-        check("password")
-          .not()
-          .isEmpty()
-          .isLength({ min: 6 })
-          .withMessage("Password must have more than 6 characters."),
-        check("bio")
-          .not()
-          .isEmpty()
-          .withMessage("Bio must not be empty.")
-      ],
-      (req, res) => {
-        // On vérifie que l'email et le username sont unique
-        req.sql.query("SELECT * FROM users WHERE username='" + req.body.username + "'", [req.body.username], (error, result) => {
-          let nameFound = [];
-          result.map(ele => nameFound.push(ele));
+// Router
+exports.router = (function() {
+  var apiRouter = express.Router();
 
-          // controls.getAllUsers();
+  // Users routes
+  apiRouter.post(
+    "/users/register/",
+    // Conditions
+    [
+      check("email")
+        .isEmail()
+        .withMessage("Email should not be empty."),
+      check("username")
+        .not()
+        .isEmpty()
+        .isLength({ min: 5, max: 25 })
+        .withMessage("Username must have more than 5 characters and less than 25."),
+      check("password")
+        .not()
+        .isEmpty()
+        .isLength({ min: 6 })
+        .withMessage("Password must have more than 6 characters.")
+    ],
+    (req, res) => {
+      const s = validationResult(req);
+      if (!s.isEmpty()) {
+        res.status(500).json(s);
+        return;
+      } else {
+        // Paramètres
+        passwordEntered = req.body.password;
+        email = req.body.email;
+        username = req.body.username;
+        biography = req.body.bio;
+        console.log(biography);
 
-          if (nameFound[0] == undefined) {
-            bcryptedPassword = bcrypt.hash(req.body.password, 7, (err, res) => {
-              req.sql.query(
-                "INSERT INTO users SET email = ?, username = ?, password = ?, bio = ?",
-                [req.body.name, req.body.contact, bcryptedPassword, req.body.bio],
-                (error, result) => {
-                  var jsonSent = {
-                    success: "true",
-                    status: "201"
-                  };
-                  res.status(201).json({ jsonSent });
-                }
-              );
-            });
+        // Check que l'email n'est pas deja present en BDD
+        sql.query("SELECT * FROM users WHERE email = ?", email, (req, result) => {
+          let emailFound = [];
+          result.map(ele => emailFound.push(ele));
+
+          // Si l'email n'existe pas en BDD
+          if (emailFound[0] == undefined) {
+            bcryptedPassword = bcrypt.hash(passwordEntered, 7);
+            // Traitement SQL
+            sql.query("INSERT INTO users SET email = ?, username = ?, password = ?, biography = ?, isAdmin = ?", [
+              email,
+              username,
+              bcryptedPassword,
+              biography,
+              0
+            ]);
+            res.status(200).json("User succesfully added to database");
           } else {
-            var jsonSent = {
+            res.status(409).json({
               success: "false",
               status: "409",
-              error: ["Email already used."]
-            };
-            res.status(409).json({ jsonSent });
+              errors: ["Email already in database."]
+            });
           }
         });
       }
-    );
-  },
-  login: function(req, res) {
-    // bcrypt.compare('somePassword', hash, function(err, res) {
-    //   if(res) {
-    //    // Passwords match
-    //   } else {
-    //    // Passwords don't match
-    //   }
-    // });
-  }
-};
+    }
+  );
+
+  apiRouter.get("/users/all/", (req, res) => {
+    req.sql.query("SELECT * FROM users", (error, result) => {
+      let data = [];
+      result.map(ele => data.push(ele));
+      res.json({
+        data: data
+      });
+    });
+  });
+
+  return apiRouter;
+})();
+// On ajoute des paranthèses pour instancier la fonction

@@ -11,7 +11,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "bcrypt-nodejs": "0.0.3",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "ejs": "^2.7.3",

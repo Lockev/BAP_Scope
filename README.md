@@ -18,10 +18,9 @@ Git
 
 Après avoir cloné de projet dans un dossier, ouvrez le avec votre panneau de commande.
 
-Executez les commandes :
+Executez la commande : (Installation des dépendances)
 
 ```
-npm init
 npm i
 ```
 
