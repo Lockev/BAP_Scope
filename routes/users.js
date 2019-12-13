@@ -28,8 +28,8 @@ exports.router = (function() {
         .withMessage("Password must have more than 6 characters.")
     ],
     (req, res) => {
-      const s = validationResult(req);
-      if (!s.isEmpty()) {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
         res.status(500).json(s);
         return;
       } else {
@@ -38,7 +38,6 @@ exports.router = (function() {
         email = req.body.email;
         username = req.body.username;
         biography = req.body.bio;
-        console.log(biography);
 
         // Check que l'email n'est pas deja present en BDD
         sql.query("SELECT * FROM users WHERE email = ?", email, (req, result) => {
@@ -47,16 +46,17 @@ exports.router = (function() {
 
           // Si l'email n'existe pas en BDD
           if (emailFound[0] == undefined) {
-            bcryptedPassword = bcrypt.hash(passwordEntered, 7);
-            // Traitement SQL
-            sql.query("INSERT INTO users SET email = ?, username = ?, password = ?, biography = ?, isAdmin = ?", [
-              email,
-              username,
-              bcryptedPassword,
-              biography,
-              0
-            ]);
-            res.status(200).json("User succesfully added to database");
+            bcrypt.hash(passwordEntered, 7).then(hash => {
+              // Traitement SQL
+              sql.query("INSERT INTO users SET email = ?, username = ?, password = ?, biography = ?, isAdmin = ?", [
+                email,
+                username,
+                hash,
+                biography,
+                0
+              ]);
+            });
+            res.status(200).json("User succesfully added to database.");
           } else {
             res.status(409).json({
               success: "false",
@@ -74,7 +74,24 @@ exports.router = (function() {
       let data = [];
       result.map(ele => data.push(ele));
       res.json({
-        data: data
+        data: data,
+        errors: error
+      });
+    });
+  });
+
+  apiRouter.get("/users/login/", (req, res) => {
+    email = req.body.email;
+    password = req.body.password;
+    bcrypt.hash(passwordEntered, 7).then(hash => {
+      // Traitement SQL
+      sql.query("SELECT * FROM users WHERE email = ?, password = ?", [email, hash], (error, result) => {
+        let data = [];
+        result.map(ele => data.push(ele));
+        res.json({
+          data: data,
+          errors: error
+        });
       });
     });
   });
