@@ -4,18 +4,30 @@ var bcrypt = require("bcryptjs");
 var sql = require("../db");
 var jwt = require("jsonwebtoken");
 
+// Bcrypt Functions
+
+function generateHash(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(7));
+}
+function checkPassword(password, dbPassword) {
+  return bcrypt.compareSync(password, dbPassword);
+}
+
 // Router
 exports.router = (function() {
   var apiRouter = express.Router();
 
-  // Users routes
+  // Register
   apiRouter.post(
     "/users/register/",
     // Conditions
     [
       check("email")
+        .not()
+        .isEmpty()
+        .withMessage("empty email.")
         .isEmail()
-        .withMessage("Email should not be empty."),
+        .withMessage("Please enter a valid email."),
       check("username")
         .not()
         .isEmpty()
@@ -34,7 +46,7 @@ exports.router = (function() {
         return;
       } else {
         // Paramètres
-        passwordEntered = req.body.password;
+        password = req.body.password;
         email = req.body.email;
         username = req.body.username;
         biography = req.body.bio;
@@ -46,21 +58,17 @@ exports.router = (function() {
 
           // Si l'email n'existe pas en BDD
           if (emailFound[0] == undefined) {
-            bcrypt.hash(passwordEntered, 7).then(hash => {
-              // Traitement SQL
-              sql.query("INSERT INTO users SET email = ?, username = ?, password = ?, biography = ?, isAdmin = ?", [
-                email,
-                username,
-                hash,
-                biography,
-                0
-              ]);
-            });
+            hash = generateHash(password);
+            // Traitement SQL
+            sql.query(
+              "INSERT INTO users SET email = ?, username = ?, password = ?, biography = ?, isAdmin = ?, auth_Token = ?, auth_Token_Validity = ?",
+              [email, username, hash, biography, 0, "defaultToken", "0000-00-00"]
+            );
+
             res.status(200).json("User succesfully added to database.");
           } else {
             res.status(409).json({
               success: "false",
-              status: "409",
               errors: ["Email already in database."]
             });
           }
@@ -69,6 +77,7 @@ exports.router = (function() {
     }
   );
 
+  // Fetch all Users
   apiRouter.get("/users/all/", (req, res) => {
     req.sql.query("SELECT * FROM users", (error, result) => {
       let data = [];
@@ -80,21 +89,59 @@ exports.router = (function() {
     });
   });
 
-  apiRouter.get("/users/login/", (req, res) => {
-    email = req.body.email;
-    password = req.body.password;
-    bcrypt.hash(passwordEntered, 7).then(hash => {
-      // Traitement SQL
-      sql.query("SELECT * FROM users WHERE email = ?, password = ?", [email, hash], (error, result) => {
-        let data = [];
-        result.map(ele => data.push(ele));
-        res.json({
-          data: data,
-          errors: error
+  // Get one user
+  apiRouter.get(
+    "/users/login/",
+    // Conditions
+    [
+      check("email")
+        .isEmail()
+        .withMessage("Please enter a valid Email."),
+      check("password")
+        .not()
+        .isEmpty()
+        .withMessage("Please enter a password.")
+    ],
+    (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.status(500).json(errors);
+        return;
+      } else {
+        // Paramètres
+        password = req.body.password;
+        email = req.body.email;
+
+        // Check que l'email est present en BDD
+        sql.query("SELECT * FROM users WHERE email = ?", [email], (req, result) => {
+          let user = [];
+          result.map(ele => user.push(ele));
+
+          // Si il existe un exemplaire de l'email en BDD
+          if (user.length == 1) {
+            let check = checkPassword(password, user[0].password);
+            if (check == true) {
+              res.status(200).json({
+                success: "true",
+                data: user[0],
+                errors: []
+              });
+            } else {
+              res.status(404).json({
+                success: "false",
+                errors: ["Password not matching."]
+              });
+            }
+          } else {
+            res.status(404).json({
+              success: "false",
+              errors: ["Email not found in database."]
+            });
+          }
         });
-      });
-    });
-  });
+      }
+    }
+  );
 
   return apiRouter;
 })();
