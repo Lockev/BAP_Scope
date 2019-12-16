@@ -5,13 +5,32 @@ var sql = require("../db");
 var jwt = require("jsonwebtoken");
 
 // Bcrypt Functions
-
 function generateHash(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(7));
 }
 function checkPassword(password, dbPassword) {
   return bcrypt.compareSync(password, dbPassword);
 }
+
+// JWT Token vérification
+function verifyToken(req, res, next) {
+  const bearerHeader = req.headers["Authorization"];
+  // Vérifie si le bearerHeader n'existe pas deja
+  if (typeof bearerHeader !== "undifined") {
+    // Récupère le token depuis le header "authorization"
+    const bearer = bearerHeader.split(" ");
+    const bearerToken = bearer[1];
+    // Renvoie le token
+    req.token = bearerToken;
+    // Next middleware
+    next();
+  } else {
+    // Interdit
+    res.sendStatus(403);
+  }
+}
+// JWT SecretKey
+secretKeyJWT = "K9inc5e2oP82pAP86218LJKcv8";
 
 // Router
 exports.router = (function() {
@@ -79,6 +98,10 @@ exports.router = (function() {
 
   // Fetch all Users
   apiRouter.get("/users/all/", (req, res) => {
+    // jwt.verify(req.token, secretKeyJWT, (err, authData) => {
+    //   if (err) {
+    //     res.sendStatus(403);
+    //   } else {
     req.sql.query("SELECT * FROM users", (error, result) => {
       let data = [];
       result.map(ele => data.push(ele));
@@ -87,6 +110,24 @@ exports.router = (function() {
         errors: error
       });
     });
+    //   }
+    // });
+  });
+
+  apiRouter.post("/token/check/", (req, res) => {
+    const user = {
+      id: 1,
+      name: "karl",
+      email: "karl@gegmail.com"
+    };
+    jwt.sign({ user }),
+      secretKeyJWT,
+      // { expiresIn: "1h" },
+      (err, token) => {
+        res.json({
+          token
+        });
+      };
   });
 
   // Get one user
