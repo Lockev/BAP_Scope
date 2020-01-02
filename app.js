@@ -2,7 +2,7 @@ var express = require("express");
 var path = require("path");
 var sql = require("./db");
 var bodyParser = require("body-parser");
-var apiRouter = require("./routes/users").router;
+var userRouter = require("./routes/users");
 
 var app = express();
 
@@ -23,8 +23,8 @@ app.set("view engine", "ejs");
 // On dit à Express que les assets static sont dans le dossier "public"
 app.use(express.static("public"));
 
-// Toutes les routes de l'apiRouter auront le prefixe "/api/"
-app.use("/api/", apiRouter);
+// Toutes les routes de userRouter auront le prefixe "/api/users/"
+app.use("/api/users/", userRouter);
 
 // Route vers l'index
 app.get("/", (req, res) => {
