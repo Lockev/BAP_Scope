@@ -23,6 +23,8 @@ Git ( https://git-scm.com/downloads > 2.24.1)
 
 Après avoir cloné de projet dans un dossier, ouvrez le dossier puis ouvrez le avec votre panneau de commande (Entrez "cmd" dans la barre de lien du dossier).
 
+![alt text](http://url/to/img.png)
+
 Executez la commande :
 
 ```
