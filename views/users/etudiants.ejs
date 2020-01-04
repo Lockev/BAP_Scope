@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scope - ?</title>
+  <title>Scope - Profils</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
@@ -62,8 +62,10 @@
         <div class="card profile-card">
           <div class="card-container">
             <div class="card-img-block">
-              <img class="card-img-top" src="/img/profilePictures/<%= users[i].pathToProfilePicture %>"
-                alt="Photo de profil de '<%= users[i].firstName %> <%= users[i].lastName %>'">
+              <div class="card-img-square">
+                <img class="card-img-top" src="/img/profilePictures/<%= users[i].pathToProfilePicture %>"
+                  alt="Photo de profil de '<%= users[i].firstName %> <%= users[i].lastName %>'">
+              </div>
             </div>
             <div class="card-body pt-0">
               <h5 class="card-title"><%= users[i].firstName %> <%= users[i].lastName %></h5>
