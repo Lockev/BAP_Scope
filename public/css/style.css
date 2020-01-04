@@ -1,0 +1,266 @@
+@font-face {
+  font-family: "Sofia Pro";
+  src: url("../font/SofiaProExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Sofia Pro";
+  src: url("../font/SofiaProLight.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Sofia Pro";
+  src: url("../font/SofiaProRegular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Sofia Pro";
+  src: url("../font/SofiaProBold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+body {
+  background: url("../img/background/backgroundBlue.png") no-repeat center fixed;
+  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+  background-size: cover; /* version standardisée */
+}
+
+nav {
+  padding: 0 !important;
+  font-family: Sofia Pro;
+  font-size: 19px;
+  font-weight: normal;
+}
+
+nav .leftPart li {
+  padding-left: 20px;
+}
+
+nav .leftPart li a {
+  color: white !important;
+}
+
+nav .rightPart {
+  padding-left: 12px;
+  padding-bottom: 3px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+nav li a {
+  transition: color 0.1s ease-in-out;
+}
+nav li a:hover {
+  color: #eaa968 !important;
+}
+
+.navbar-toggler {
+  border: 2px solid #343a40;
+}
+
+.navbar-toggler-icon {
+  background-image: url("../img/items/bars-solid.svg");
+}
+
+/* Cards Container */
+.displayCards {
+  margin: 10px 3.5vw;
+  width: calc(60vw - 20px);
+}
+
+/* Profile Cards */
+.profile-card {
+  margin: 20px 0;
+  padding: 0 !important;
+  font-family: Sofia Pro;
+  font-weight: normal;
+}
+.profile-card .btn {
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 7px 20px;
+}
+.profile-card .card-img-block {
+  width: 91%;
+  margin: 0 auto;
+  position: relative;
+  top: -20px;
+}
+.profile-card .card-img-block img {
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.63);
+}
+.profile-card .card-text {
+  height: 66px;
+}
+.profile-card h5 {
+  color: #5793ce;
+  font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.profile-card p {
+  font-size: 14px;
+  font-weight: 300;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.profile-card .btn {
+  background-color: #5793ce;
+  border-color: #5793ce;
+  color: #fff;
+  transition: color 0.1s ease-in-out, background-color 0.1s ease-in-out, border-color 0.1s ease-in-out;
+}
+.profile-card .btn i {
+  padding: 3px 0 0 5px;
+  font-size: 10px;
+  color: #fff;
+}
+.profile-card a:hover {
+  background-color: #eaa968;
+  border-color: #eaa968;
+}
+
+/* Formulaires */
+
+label {
+  color: #fff;
+  font-size: 17px;
+}
+
+/* Page myProfile */
+
+.personnal-profile-card {
+  display: flex;
+  width: calc(59vw - 20px);
+  margin: 20px 3.5vw;
+  padding: 0 !important;
+  font-family: Sofia Pro;
+  font-weight: normal;
+}
+.personnal-profile-card .btn {
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-size: 15px;
+  padding: 7px 20px;
+}
+.personnal-profile-card .card-img-block {
+  width: 28%;
+  margin: 0 3% 0 6%;
+  position: relative;
+  top: -20px;
+}
+.personnal-profile-card .card-img-block img {
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.63);
+}
+.personnal-profile-card .card-body {
+  padding-top: 30px !important;
+}
+.personnal-profile-card .card-text {
+  height: 66px;
+}
+.personnal-profile-card h5 {
+  color: #5793ce;
+  font-weight: 600;
+  font-size: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.personnal-profile-card h6 {
+  color: #5793ce;
+  font-weight: 500;
+  font-size: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.personnal-profile-card i {
+  font-size: 20px;
+  color: #5793ce;
+}
+.personnal-profile-card .card-bot-container {
+  padding: 0 0 15px 15px;
+}
+.personnal-profile-card p {
+  font-size: 14px;
+  font-weight: 300;
+}
+.personnal-profile-card .btn {
+  background-color: #5793ce;
+  border-color: #5793ce;
+  color: #fff;
+  transition: color 0.1s ease-in-out, background-color 0.1s ease-in-out, border-color 0.1s ease-in-out;
+}
+.personnal-profile-card .btn i {
+  padding: 3px 0 0 5px;
+  font-size: 16px;
+  color: #fff;
+}
+.personnal-profile-card a:hover {
+  background-color: #eaa968;
+  border-color: #eaa968;
+}
+
+@media only screen and (max-width: 1300px) {
+  .displayCards {
+    margin: 10px 3.5vw;
+    width: calc(70vw - 14px);
+  }
+  .personnal-profile-card {
+    width: calc(70vw - 20px);
+  }
+  .personnal-profile-card .card-img-block {
+    width: 30%;
+  }
+  .personnal-profile-card h5 {
+    font-size: 24px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  nav .leftPart li {
+    padding-left: 0px;
+  }
+
+  nav .rightPart {
+    padding-left: 0px;
+    border-radius: 0px;
+    background-color: inherit;
+  }
+
+  nav li a {
+    color: white !important;
+  }
+  nav li a:hover {
+    color: #eaa968 !important;
+  }
+
+  .personnal-profile-card {
+    width: calc(90vw - 20px);
+    margin: 20px auto;
+    padding: 0 !important;
+    font-family: Sofia Pro;
+    font-weight: normal;
+  }
+  .personnal-profile-card .card-body {
+    width: 100%;
+    padding-top: 10px !important;
+  }
+  .personnal-profile-card .card-img-block {
+    width: 35%;
+    margin: 0 auto;
+  }
+}

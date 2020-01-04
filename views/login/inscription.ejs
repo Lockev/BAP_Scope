@@ -53,7 +53,64 @@
     </div>
   </nav>
   <div class="container mt-5">
-    <h1>Bonjour ! Bienvenue sur Scope.</h1>
+    <div class="row">
+      <div class="col-lg-6">
+        <form action="" method="post">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Votre nom :</label>
+                <input type="text" name="lastName" class="form-control" placeholder="Ex : Dupont">
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Votre prénom :</label>
+                <input type="text" name="firstName" class="form-control" placeholder="Ex : Jean">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Votre pseudo :</label>
+            <input type="text" name="username" class="form-control" placeholder="Ex : Lock">
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Vous êtes un :</label>
+                <select class="form-control" name="isEtudiant">
+                  <option value="etudiant">Etudiant</option>
+                  <option value="professionnel">Professionnel</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Votre âge :</label>
+                <input type="number" name="age" class="form-control" placeholder="Ex : 18">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Votre e-mail :</label>
+            <input type="text" name="email" class="form-control" placeholder="Ex : example.name@gmail.com">
+          </div>
+          <div class="form-group">
+            <label>Votre mot de passe :</label>
+            <input type="password" name="password" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Confirmez votre mot de passe :</label>
+            <input type="password" name="confirmPassword" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Votre biographie :</label>
+            <textarea type="text" name="biography" class="form-control" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary mb-3" value="Upload">Je m'inscris !</button>
+        </form>
+      </div>
+    </div>
 
   </div>
 

@@ -47,7 +47,7 @@ app.use(function(err, req, res, next) {
 
 // Pour toutes les autres routes : Erreur 404
 app.get("*", function(req, res) {
-  res.status(404).render("404");
+  res.status(404).render("errors/404");
 });
 
 module.exports = app;

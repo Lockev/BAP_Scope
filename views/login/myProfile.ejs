@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scope - Inscription</title>
+  <title>Scope - ?</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
@@ -15,6 +15,7 @@
 </head>
 
 <body>
+
   <nav class="navbar navbar-expand-lg position-static px-5">
     <a class="navbar-brand" href="/"><img src="/img/items/scopeBlack.svg" alt="Logo de Scope" width="145"
         class="d-inline-block align-middle mr-2"></a>
@@ -40,7 +41,7 @@
 
           <!-- Uniquement quand le user est connecté -->
           <!-- <li class="nav-item">
-              <a class="nav-link" href="#">Mon profil</a>
+              <a class="nav-link" href="/api/users/myProfile/">Mon profil</a>
             </li> -->
           <li class="nav-item">
             <a class="nav-link pr-4" href="/api/users/login/">Connexion</a>
@@ -52,10 +53,39 @@
       </form>
     </div>
   </nav>
-  <div class="container mt-5">
-    <h1>Bonjour ! Bienvenue sur Scope.</h1>
+  <div class="row">
+    <% if (user) { %>
+    <div class="card personnal-profile-card">
+      <div class="card-top-container">
+        <div class="row">
+          <div class="card-img-block">
+            <img class="card-img-top" src="/img/profilePictures/<%= user.pathToProfilePicture %>"
+              alt="Photo de profil de '<%= user.firstName %> <%= user.lastName %>'">
+          </div>
+          <div class="card-body pt-0">
+            <h5 class="card-title"><%= user.firstName %> <%= user.lastName %></h5>
+            <h6>Souffleur de verre</h6>
+            <h6><%= user.age %> ans</h6>
+            <h6><i class="fas fa-map-marker-alt"></i> Paris 75000, France</h6>
 
+
+          </div>
+        </div>
+        <div class="card-bot-container">
+          <p class="card-text"><%= user.biography %></p>
+          <a href="/api/users/modify/profile/<%= user.username %>" class="btn">Modifier mon profil <i
+              class="fas fa-arrow-right"></i></a>
+          <a href="/api/users/modify/profilePicture/<%= user.username %>" class="btn">Modifier ma photo de profil <i
+              class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+
+
+    <% } %>
   </div>
+
 
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
