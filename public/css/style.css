@@ -48,8 +48,7 @@ nav .leftPart li a {
 }
 
 nav .rightPart {
-  padding-left: 12px;
-  padding-bottom: 3px;
+  padding: 0 12px 3px 12px;
   border-radius: 5px;
   background-color: #fff;
 }
@@ -67,6 +66,22 @@ nav li a:hover {
 
 .navbar-toggler-icon {
   background-image: url("../img/items/bars-solid.svg");
+}
+/* Index */
+.leftContainer {
+  font-family: Sofia Pro;
+  margin: 20px calc(10vw + 15px);
+  width: calc(60vw - 20px);
+  color: #fff;
+}
+
+.leftContainer p {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.leftContainer h1 {
+  margin: 0 auto;
 }
 
 /* Cards Container */
@@ -181,9 +196,7 @@ label {
 .personnal-profile-card .card-body {
   padding-top: 30px !important;
 }
-.personnal-profile-card .card-text {
-  height: 66px;
-}
+
 .personnal-profile-card h5 {
   color: #5793ce;
   font-weight: 600;
@@ -205,11 +218,13 @@ label {
   color: #5793ce;
 }
 .personnal-profile-card .card-bot-container {
-  padding: 0 0 15px 15px;
+  padding: 0 15px 15px 15px;
 }
 .personnal-profile-card p {
   font-size: 14px;
   font-weight: 300;
+  text-align: justify;
+  text-justify: inter-word;
 }
 .personnal-profile-card .btn {
   background-color: #5793ce;
@@ -241,6 +256,15 @@ label {
   .personnal-profile-card h5 {
     font-size: 24px;
   }
+
+  .leftContainer h1 {
+    font-size: 45px;
+  }
+
+  .displayCards {
+    width: 80vw;
+    margin: 20px auto;
+  }
 }
 
 @media only screen and (max-width: 992px) {
@@ -261,6 +285,15 @@ label {
     color: #eaa968 !important;
   }
 
+  .leftContainer {
+    margin: 15px calc(8vw + 15px);
+    width: calc(80vw - 20px);
+  }
+
+  .leftContainer h1 {
+    font-size: 26px;
+  }
+
   .personnal-profile-card {
     width: calc(90vw - 20px);
     margin: 20px auto;
@@ -271,6 +304,7 @@ label {
   .personnal-profile-card .card-body {
     width: 100%;
     padding-top: 10px !important;
+    text-align: center;
   }
   .personnal-profile-card .card-img-block {
     width: 35%;

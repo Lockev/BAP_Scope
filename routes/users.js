@@ -14,11 +14,7 @@ function checkPassword(password, dbPassword) {
   return bcrypt.compareSync(password, dbPassword);
 }
 
-// Register Page
-router.get("/inscription/", (req, res) => {
-  res.status(200).render("login/inscription");
-});
-
+// Page d'inscription
 router.post(
   "/inscription/",
   // Conditions
@@ -34,6 +30,7 @@ router.post(
     firstName = req.body.firstName;
     lastName = req.body.lastName;
     age = req.body.age;
+    job = req.body.job;
     isWhat = req.body.isEtudiant;
     profilePictureName = "defaultProfilePicture.jpg";
 
@@ -49,8 +46,8 @@ router.post(
 
           // Traitement SQL
           sql.query(
-            "INSERT INTO users SET email = ?, username = ?, firstName = ?, lastName = ?, password = ?, biography = ?, age = ?, isWhat = ?, pathToProfilePicture = ?, isAdmin = ?, auth_Token = ?, auth_Token_Validity = ?",
-            [email, username, firstName, lastName, hash, biography, age, isWhat, profilePictureName, 0, "defaultToken", "0000-00-00"]
+            "INSERT INTO users SET email = ?, username = ?, firstName = ?, lastName = ?, password = ?, biography = ?, age = ?, job = ?, isWhat = ?, pathToProfilePicture = ?, isAdmin = ?, auth_Token = ?, auth_Token_Validity = ?",
+            [email, username, firstName, lastName, hash, biography, age, job, isWhat, profilePictureName, 0, "defaultToken", "0000-00-00"]
           );
 
           res.status(200).json("User succesfully added to database.");
@@ -70,41 +67,7 @@ router.post(
   }
 );
 
-// Affichage de tous les etudiants
-router.get("/all/etudiants", (req, res) => {
-  req.sql.query("SELECT * FROM users WHERE isWhat = ?", ["etudiant"], (err, data) => {
-    if (data.length >= 1) {
-      delete data.password;
-      res.status(200).render("users/etudiants", { users: data });
-    } else {
-      res.status(404).json({
-        success: "false",
-        errors: ["No users found in DataBase."]
-      });
-    }
-  });
-});
-
-// Affichage de tous les etudiants
-router.get("/all/professionnels", (req, res) => {
-  req.sql.query("SELECT * FROM users WHERE isWhat = ?", ["professionnel"], (err, data) => {
-    if (data.length >= 1) {
-      delete data.password;
-      res.status(200).render("users/etudiants", { users: data });
-    } else {
-      res.status(404).json({
-        success: "false",
-        errors: ["No users found in DataBase."]
-      });
-    }
-  });
-});
-
 // Login
-router.get("/login/", (req, res) => {
-  res.status(200).render("login/connexion");
-});
-
 router.post(
   "/login/",
   // Conditions
@@ -140,24 +103,6 @@ router.post(
   }
 );
 
-// Chercher un utilisateur
-router.get("/search/:username", (req, res) => {
-  sql.query("SELECT * FROM users WHERE username = ?", [req.params.username], (err, result) => {
-    if (err) console.log(err);
-
-    // Si il existe un exemplaire du username en BDD
-    if (result.length == 1) {
-      delete result[0].password;
-      res.status(200).render("users/user", { user: result[0] });
-    } else {
-      res.status(404).json({
-        success: "false",
-        errors: ["User not found in database."]
-      });
-    }
-  });
-});
-
 //Modifier un profil
 router.get("/modify/profile/:username", (req, res) => {
   sql.query("SELECT * FROM users WHERE username = ?", [req.params.username], (err, result) => {
@@ -175,7 +120,6 @@ router.get("/modify/profile/:username", (req, res) => {
     }
   });
 });
-
 router.post("/modify/profile/:username", (req, res) => {
   // Paramètres
 

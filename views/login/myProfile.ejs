@@ -27,13 +27,13 @@
     <div class="collapse navbar-collapse" id="mainNav">
       <ul class="navbar-nav mr-auto leftPart">
         <li class="nav-item active">
-          <a class="nav-link" href="/api/users/all/etudiants">Etudiants <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/users/all/etudiants">Etudiants <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/api/users/all/professionnels">Professionnels</a>
+          <a class="nav-link" href="/users/all/professionnels">Professionnels</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Premium</a>
+          <a class="nav-link" href="/premium/">Premium</a>
         </li>
       </ul>
       <form class="form-inline">
@@ -41,13 +41,13 @@
 
           <!-- Uniquement quand le user est connecté -->
           <!-- <li class="nav-item">
-              <a class="nav-link" href="/api/users/myProfile/">Mon profil</a>
+              <a class="nav-link" href="/users/myProfile/">Mon profil</a>
             </li> -->
           <li class="nav-item">
-            <a class="nav-link pr-4" href="/api/users/login/">Connexion</a>
+            <a class="nav-link pr-4" href="/users/login/">Connexion</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/api/users/inscription/">Inscription</a>
+            <a class="nav-link" href="/users/inscription/">Inscription</a>
           </li>
         </ul>
       </form>
@@ -64,8 +64,8 @@
           </div>
           <div class="card-body pt-0">
             <h5 class="card-title"><%= user.firstName %> <%= user.lastName %></h5>
-            <h6>Souffleur de verre</h6>
-            <h6><%= user.age %> ans</h6>
+            <h6><i class="fas fa-briefcase"></i> <%= user.job %></h6>
+            <h6><i class="fas fa-birthday-cake"></i> <%= user.age %> ans</h6>
             <h6><i class="fas fa-map-marker-alt"></i> Paris 75000, France</h6>
 
 

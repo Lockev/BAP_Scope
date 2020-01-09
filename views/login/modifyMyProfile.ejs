@@ -26,13 +26,13 @@
     <div class="collapse navbar-collapse" id="mainNav">
       <ul class="navbar-nav mr-auto leftPart">
         <li class="nav-item active">
-          <a class="nav-link" href="/api/users/all/etudiants">Etudiants <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/users/all/etudiants">Etudiants <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/api/users/all/professionnels">Professionnels</a>
+          <a class="nav-link" href="/users/all/professionnels">Professionnels</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Premium</a>
+          <a class="nav-link" href="/premium/">Premium</a>
         </li>
       </ul>
       <form class="form-inline">
@@ -43,10 +43,10 @@
               <a class="nav-link" href="#">Mon profil</a>
             </li> -->
           <li class="nav-item">
-            <a class="nav-link pr-4" href="/api/users/login/">Connexion</a>
+            <a class="nav-link pr-4" href="/users/login/">Connexion</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/api/users/inscription/">Inscription</a>
+            <a class="nav-link" href="/users/inscription/">Inscription</a>
           </li>
         </ul>
       </form>
@@ -56,19 +56,17 @@
     <div class="row">
       <div class="col-lg-6">
         <form action="" method="post">
-          <div class="row">
-            <div class="form-group">
-              <label>Votre âge :</label>
-              <input type="number" name="age" class="form-control" placeholder="Ex : 18" value="<%= user.age %>">
-            </div>
-            <div class="form-group">
-              <label>Votre biographie :</label>
-              <textarea type="text" name="biography" class="form-control" rows="3"><%= user.biography %></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary mb-3" value="Upload">Modifier son profil</button>
+          <div class="form-group">
+            <label>Votre âge :</label>
+            <input type="number" name="age" class="form-control" placeholder="Ex : 18" value="<%= user.age %>">
           </div>
-        </form>
+          <div class="form-group">
+            <label>Votre biographie :</label>
+            <textarea type="text" name="biography" class="form-control" rows="3"><%= user.biography %></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary mb-3" value="Upload">Modifier son profil</button>
       </div>
+      </form>
     </div>
 
   </div>

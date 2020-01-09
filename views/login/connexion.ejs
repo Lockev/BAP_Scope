@@ -26,13 +26,13 @@
     <div class="collapse navbar-collapse" id="mainNav">
       <ul class="navbar-nav mr-auto leftPart">
         <li class="nav-item active">
-          <a class="nav-link" href="/api/users/all/etudiants">Etudiants <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/users/all/etudiants">Etudiants <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/api/users/all/professionnels">Professionnels</a>
+          <a class="nav-link" href="/users/all/professionnels">Professionnels</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Premium</a>
+          <a class="nav-link" href="/premium/">Premium</a>
         </li>
       </ul>
       <form class="form-inline">
@@ -43,10 +43,10 @@
               <a class="nav-link" href="#">Mon profil</a>
             </li> -->
           <li class="nav-item">
-            <a class="nav-link pr-4" href="/api/users/login/">Connexion</a>
+            <a class="nav-link pr-4" href="/users/login/">Connexion</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/api/users/inscription/">Inscription</a>
+            <a class="nav-link" href="/users/inscription/">Inscription</a>
           </li>
         </ul>
       </form>
@@ -55,7 +55,7 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-lg-6">
-        <form action="" method="post">
+        <form action="/api/users/login/" method="post">
           <div class="form-group">
             <label>Votre e-mail :</label>
             <input type="text" name="email" class="form-control" placeholder="Ex : example.name@gmail.com">
