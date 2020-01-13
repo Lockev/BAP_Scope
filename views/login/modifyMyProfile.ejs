@@ -56,7 +56,7 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-lg-6">
-        <form action="" method="post">
+        <form action="/api/users/modify/profile/<%= user.username %>" method="post">
           <div class="form-group">
             <label>Votre âge :</label>
             <input type="number" name="age" class="form-control" placeholder="Ex : 18" value="<%= user.age %>">

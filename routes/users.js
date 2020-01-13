@@ -100,7 +100,6 @@ router.post("/inscription/", (req, res) => {
       });
     }
   } else {
-    // console.log(typeOf(validatorErreurs));
     res.status(409).json({
       validatorErreurs
     });
@@ -117,68 +116,74 @@ router.post(
     password = req.body.password;
     email = req.body.email;
 
-    // Check que l'email est present en BDD
-    sql.query("SELECT * FROM users WHERE email = ?", [email], (req, result) => {
-      let user = [];
-      result.map(ele => user.push(ele));
+    // Validator;
+    let validatorErreurs = {};
+    if (!validator.isLength(password, { min: 5, max: 50 })) {
+      validatorErreurs.password = "Password must have at least 5 characters, with a maximum of 50.";
+    }
+    if (!validator.isEmail(email)) {
+      validatorErreurs.email = "Please enter a valid email.";
+    }
 
-      // Si il existe un exemplaire de l'email en BDD
-      if (user.length == 1) {
-        let check = checkPassword(password, user[0].password);
-        if (check == true) {
-          res.status(200).render("login/myProfile", { user: user[0] });
+    if (Object.entries(validatorErreurs).length === 0) {
+      // Check que l'email est present en BDD
+      sql.query("SELECT * FROM users WHERE email = ?", [email], (req, result) => {
+        let user = [];
+        result.map(ele => user.push(ele));
+
+        // Si il existe un exemplaire de l'email en BDD
+        if (user.length == 1) {
+          let check = checkPassword(password, user[0].password);
+          if (check == true) {
+            res.status(200).redirect("/users/myProfile/" + user[0].username);
+          } else {
+            res.status(404).json({
+              success: "false",
+              errors: ["Password not matching."]
+            });
+          }
         } else {
           res.status(404).json({
             success: "false",
-            errors: ["Password not matching."]
+            errors: ["Email not found in database."]
           });
         }
-      } else {
-        res.status(404).json({
-          success: "false",
-          errors: ["Email not found in database."]
-        });
-      }
-    });
+      });
+    } else {
+      res.status(409).json({
+        validatorErreurs
+      });
+    }
   }
 );
 
 //Modifier un profil
-router.get("/modify/profile/:username", (req, res) => {
-  sql.query("SELECT * FROM users WHERE username = ?", [req.params.username], (err, result) => {
-    if (err) console.log(err);
-
-    // Si il existe un exemplaire du username en BDD
-    if (result.length == 1) {
-      delete result[0].password;
-      res.status(200).render("login/modifyMyProfile", { user: result[0] });
-    } else {
-      res.status(404).json({
-        success: "false",
-        errors: ["User not found in database."]
-      });
-    }
-  });
-});
 router.post("/modify/profile/:username", (req, res) => {
   // Paramètres
-
-  firstName = req.body.firstName;
-  lastName = req.body.lastName;
   age = req.body.age;
   biography = req.body.biography;
-  username = req.params.username;
 
-  // Traitement SQL
-  sql.query(
-    "UPDATE users SET firstName = ?, lastName = ?, biography = ?, age = ? WHERE username = ?",
-    [firstName, lastName, biography, age, req.params.username],
-    (err, result) => {
+  // Validator;
+  let validatorErreurs = {};
+  if (age == undefined || age <= 13) {
+    validatorErreurs.age = "You need to be 13 years old or older to register on Scope.";
+  }
+  if (validator.isURL(biography)) {
+    validatorErreurs.biographyLink = "Links are not allowed in your biography.";
+  }
+  if (Object.entries(validatorErreurs).length === 0) {
+    // Traitement SQL
+    sql.query("UPDATE users SET biography = ?, age = ? WHERE username = ?", [biography, age, req.params.username], (err, result) => {
+      console.log(age);
       if (err) throw err;
       var user = result[0];
-      res.redirect("../../login/");
-    }
-  );
+      res.redirect("/users/login/");
+    });
+  } else {
+    res.status(409).json({
+      validatorErreurs
+    });
+  }
 });
 
 // Modifier une PP

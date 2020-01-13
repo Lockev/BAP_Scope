@@ -63,11 +63,27 @@ router.get("/users/login/", (req, res) => {
   res.status(200).render("login/connexion");
 });
 
+// Mon profil
+router.get("/users/myProfile/:username", (req, res) => {
+  sql.query("SELECT * FROM users WHERE username = ?", [req.params.username], (err, result) => {
+    if (err) console.log(err);
+    // Si il existe un exemplaire du username en BDD
+    if (result.length == 1) {
+      delete result[0].password;
+      res.status(200).render("login/myProfile", { user: result[0] });
+    } else {
+      res.status(404).json({
+        success: "false",
+        errors: ["User not found in database."]
+      });
+    }
+  });
+});
+
 // Chercher un utilisateur
 router.get("/users/search/:username", (req, res) => {
   sql.query("SELECT * FROM users WHERE username = ?", [req.params.username], (err, result) => {
     if (err) console.log(err);
-
     // Si il existe un exemplaire du username en BDD
     if (result.length == 1) {
       delete result[0].password;
@@ -81,5 +97,22 @@ router.get("/users/search/:username", (req, res) => {
   });
 });
 
+//Modifier un profil
+router.get("/modify/profile/:username", (req, res) => {
+  sql.query("SELECT * FROM users WHERE username = ?", [req.params.username], (err, result) => {
+    if (err) console.log(err);
+
+    // Si il existe un exemplaire du username en BDD
+    if (result.length == 1) {
+      delete result[0].password;
+      res.status(200).render("login/modifyMyProfile", { user: result[0] });
+    } else {
+      res.status(404).json({
+        success: "false",
+        errors: ["User not found in database."]
+      });
+    }
+  });
+});
 
 module.exports = router;
