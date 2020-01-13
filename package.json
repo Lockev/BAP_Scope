@@ -23,6 +23,7 @@
     "http-errors": "^1.7.3",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.0.0",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "validator": "^12.1.0"
   }
 }

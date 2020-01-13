@@ -4,6 +4,7 @@ var session = require("express-session");
 var sql = require("../db");
 var formidable = require("formidable");
 var router = express.Router();
+var validator = require("validator");
 // var jwt = require("jsonwebtoken");
 
 // Bcrypt Functions
@@ -15,25 +16,59 @@ function checkPassword(password, dbPassword) {
 }
 
 // Page d'inscription
-router.post(
-  "/inscription/",
-  // Conditions
-  // HEDDI DELETE
-  (req, res) => {
-    // Paramètres
+router.post("/inscription/", (req, res) => {
+  // Paramètres
 
-    password = req.body.password;
-    confirmPassword = req.body.confirmPassword;
-    email = req.body.email.toLowerCase();
-    username = req.body.username;
-    biography = req.body.biography;
-    firstName = req.body.firstName;
-    lastName = req.body.lastName;
-    age = req.body.age;
-    job = req.body.job;
-    isWhat = req.body.isEtudiant;
-    profilePictureName = "defaultProfilePicture.jpg";
+  password = req.body.password;
+  confirmPassword = req.body.confirmPassword;
+  email = req.body.email.toLowerCase();
+  username = req.body.username;
+  biography = validator.escape(req.body.biography);
+  firstName = req.body.firstName;
+  lastName = req.body.lastName;
+  age = req.body.age;
+  job = req.body.job;
+  isWhat = req.body.isEtudiant;
+  profilePictureName = "defaultProfilePicture.jpg";
 
+  // Validator;
+  let validatorErreurs = {};
+  if (!validator.isLength(password, { min: 5, max: 50 })) {
+    validatorErreurs.password = "Password must have at least 5 characters, with a maximum of 50.";
+  }
+  if (!validator.isEmail(email)) {
+    validatorErreurs.email = "Please enter a valid email.";
+  }
+  if (!validator.isLength(username, { min: 5, max: 25 })) {
+    validatorErreurs.usernameLength = "Username must have at least 5 characters, with a maximum of 25.";
+  }
+  if (!validator.isAlphanumeric(username, "fr-FR")) {
+    validatorErreurs.usernameInvalid = "You can only use Alphanumeric characters for usernames.";
+  }
+  if (!validator.isAlpha(firstName, "fr-FR")) {
+    validatorErreurs.firstName = "Please enter a valid firstname.";
+  }
+  if (validator.isEmpty(firstName)) {
+    validatorErreurs.firstName = "Please enter a valid firstname.";
+  }
+  if (!validator.isAlpha(lastName, "fr-FR")) {
+    validatorErreurs.lastName = "Please enter a valid lastname.";
+  }
+  if (validator.isEmpty(lastName)) {
+    validatorErreurs.lastName = "Please enter a valid lastname.";
+  }
+  if (validator.isURL(biography)) {
+    validatorErreurs.biographyLink = "Links are not allowed in your biography.";
+  }
+  if (isWhat !== "etudiant" && isWhat !== "professionnel") {
+    console.log(isWhat);
+    validatorErreurs.UserType = "You can only be an `etudiant` or a `professionnel`.";
+  }
+  if (age == undefined || age <= 13) {
+    validatorErreurs.age = "You need to be 13 years old or older to register on Scope.";
+  }
+
+  if (Object.entries(validatorErreurs).length === 0) {
     if (confirmPassword === password) {
       // Check que l'email n'est pas deja present en BDD
       sql.query("SELECT * FROM users WHERE email = ? OR username = ?", [email, username], (err, result) => {
@@ -64,8 +99,13 @@ router.post(
         errors: ["Passwords does not match."]
       });
     }
+  } else {
+    // console.log(typeOf(validatorErreurs));
+    res.status(409).json({
+      validatorErreurs
+    });
   }
-);
+});
 
 // Login
 router.post(
