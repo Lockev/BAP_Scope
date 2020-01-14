@@ -1,31 +1,27 @@
 @font-face {
-  font-family: "Sofia Pro";
-  src: url("../font/SofiaProExtraLight.ttf") format("truetype");
-  font-weight: 200;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Sofia Pro";
-  src: url("../font/SofiaProLight.ttf") format("truetype");
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Sofia Pro";
-  src: url("../font/SofiaProRegular.ttf") format("truetype");
+  font-family: "Vision";
+  src: url("../font/Vision-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Sofia Pro";
-  src: url("../font/SofiaProBold.ttf") format("truetype");
-  font-weight: bold;
-  font-style: normal;
+  font-family: "Vision";
+  src: url("../font/Vision-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
 }
 
+@font-face {
+  font-family: "Vision";
+  src: url("../font/Vision-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: bold;
+}
+
+* {
+  font-family: Vision;
+}
 body {
   background: url("../img/background/backgroundBlue.png") no-repeat center fixed;
   -webkit-background-size: cover; /* pour anciens Chrome et Safari */
@@ -34,13 +30,13 @@ body {
 
 nav {
   padding: 0 !important;
-  font-family: Sofia Pro;
+  font-family: Vision;
   font-size: 19px;
   font-weight: normal;
 }
 
 nav .leftPart li {
-  padding-left: 20px;
+  padding: 8px 0 0 20px;
 }
 
 nav .leftPart li a {
@@ -48,7 +44,8 @@ nav .leftPart li a {
 }
 
 nav .rightPart {
-  padding: 0 12px 3px 12px;
+  margin-top: 2px;
+  padding: 5px 12px 0 12px;
   border-radius: 5px;
   background-color: #fff;
 }
@@ -69,7 +66,6 @@ nav li a:hover {
 }
 /* Index */
 .leftContainer {
-  font-family: Sofia Pro;
   margin: 20px calc(10vw + 15px);
   width: calc(60vw - 20px);
   color: #fff;
@@ -94,7 +90,6 @@ nav li a:hover {
 .profile-card {
   margin: 20px 0;
   padding: 0 !important;
-  font-family: Sofia Pro;
   font-weight: normal;
 }
 .profile-card .btn {
@@ -174,7 +169,6 @@ label {
   width: calc(59vw - 20px);
   margin: 20px 3.5vw;
   padding: 0 !important;
-  font-family: Sofia Pro;
   font-weight: normal;
 }
 .personnal-profile-card .btn {
@@ -298,7 +292,6 @@ label {
     width: calc(90vw - 20px);
     margin: 20px auto;
     padding: 0 !important;
-    font-family: Sofia Pro;
     font-weight: normal;
   }
   .personnal-profile-card .card-body {

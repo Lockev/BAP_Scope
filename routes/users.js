@@ -1,11 +1,9 @@
 var express = require("express");
 var bcrypt = require("bcryptjs");
-var session = require("express-session");
 var sql = require("../db");
 var formidable = require("formidable");
 var router = express.Router();
 var validator = require("validator");
-// var jwt = require("jsonwebtoken");
 
 // Bcrypt Functions
 function generateHash(password) {

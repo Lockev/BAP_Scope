@@ -3,6 +3,7 @@ var path = require("path");
 var sql = require("./db");
 var bodyParser = require("body-parser");
 var userRouter = require("./routes/users");
+var sessionRouter = require("./routes/session");
 var Router = require("./routes/route");
 
 var app = express();
@@ -26,6 +27,7 @@ app.use(express.static("public"));
 
 // Toutes les routes de userRouter auront le prefixe "/api/users/"
 app.use("/api/users/", userRouter);
+app.use("/api/session/", sessionRouter);
 app.use("/", Router);
 
 // Désactivation de x-powered-by
