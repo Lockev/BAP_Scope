@@ -3,8 +3,8 @@ var path = require("path");
 var sql = require("./db");
 var bodyParser = require("body-parser");
 var userRouter = require("./routes/users");
-var sessionRouter = require("./routes/session");
 var Router = require("./routes/route");
+var session = require("express-session");
 
 var app = express();
 
@@ -18,6 +18,14 @@ app.use(function(req, res, next) {
   next();
 });
 
+// Config de express session : Une session reste ouverte pendant 6h
+app.use(session({ secret: "v2er56rb5bpojoh8vfv6e6t8b62r98tr6b16tb1P", cookie: { maxAge: 3600000 }, resave: false, saveUninitialized: false }));
+
+app.use(function(req, res, next) {
+  req.session.randomInfo = "Lockv";
+  next();
+});
+
 // On definit ejs en tant que randerer des templates
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -27,7 +35,6 @@ app.use(express.static("public"));
 
 // Toutes les routes de userRouter auront le prefixe "/api/users/"
 app.use("/api/users/", userRouter);
-app.use("/api/session/", sessionRouter);
 app.use("/", Router);
 
 // Désactivation de x-powered-by

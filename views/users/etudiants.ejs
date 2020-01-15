@@ -16,67 +16,12 @@
 </head>
 
 <body>
-
-  <nav class="navbar navbar-expand-lg position-static px-5">
-    <a class="navbar-brand" href="/"><img src="/img/items/scopeBlack.svg" alt="Logo de Scope" width="145"
-        class="d-inline-block align-middle mr-2"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="mainNav"
-      aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="mainNav">
-      <ul class="navbar-nav mr-auto leftPart">
-        <li class="nav-item active">
-          <a class="nav-link" href="/users/all/etudiants">Etudiants <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/users/all/professionnels">Professionnels</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/premium/">Premium</a>
-        </li>
-      </ul>
-      <form class="form-inline">
-        <ul class="navbar-nav mr-auto rightPart">
-
-          <!-- Uniquement quand le user est connecté -->
-          <!-- <li class="nav-item">
-              <a class="nav-link" href="#">Mon profil</a>
-            </li> -->
-          <li class="nav-item">
-            <a class="nav-link pr-4" href="/users/login/">Connexion</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/users/inscription/">Inscription</a>
-          </li>
-        </ul>
-      </form>
-    </div>
-  </nav>
-
+  <%- include('../includes/navbar'); %>
   <div class="displayCards">
     <div class="row" id="allCards">
       <!-- Appelle toutes les cartes des étudiants par ordre d'inscription -->
       <% for(var i=0; i < users.length; i++) { %>
-      <div class="col-lg-4">
-        <div class="card profile-card">
-          <div class="card-container">
-            <div class="card-img-block">
-              <div class="card-img-square">
-                <img class="card-img-top" src="/img/profilePictures/<%= users[i].pathToProfilePicture %>"
-                  alt="Photo de profil de '<%= users[i].firstName %> <%= users[i].lastName %>'">
-              </div>
-            </div>
-            <div class="card-body pt-0">
-              <h5 class="card-title"><%= users[i].firstName %> <%= users[i].lastName %></h5>
-              <p class="card-text"><%= users[i].biography %></p>
-              <a href="/users/search/<%= users[i].username %>" class="btn">Voir le profil <i
-                  class="fas fa-arrow-right"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <%- include('../includes/cards', {user: users[i]}); %>
       <% } %>
 
       <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

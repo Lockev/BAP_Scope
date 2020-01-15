@@ -1,16 +1,7 @@
 var express = require("express");
-var bcrypt = require("bcryptjs");
 var sql = require("../db");
 var router = express.Router();
-// var jwt = require("jsonwebtoken");
-
-// Bcrypt Functions
-function generateHash(password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(7));
-}
-function checkPassword(password, dbPassword) {
-  return bcrypt.compareSync(password, dbPassword);
-}
+var session = require("express-session");
 
 // Route vers l'index
 router.get("/", (req, res) => {
@@ -69,7 +60,14 @@ router.get("/users/myProfile/:username", (req, res) => {
     // Si il existe un exemplaire du username en BDD
     if (result.length == 1) {
       delete result[0].password;
-      res.status(200).render("login/myProfile", { user: result[0] });
+      req.session.reload(function(err) {
+        if (err) throw err;
+        if (result[0].username == session.username) {
+          res.status(200).render("login/myProfile", { user: result[0] });
+        } else {
+          res.status(200).redirect("/users/search/" + result[0].username);
+        }
+      });
     } else {
       res.status(404).json({
         success: "false",

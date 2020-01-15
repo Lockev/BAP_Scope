@@ -4,6 +4,7 @@ var sql = require("../db");
 var formidable = require("formidable");
 var router = express.Router();
 var validator = require("validator");
+var session = require("express-session");
 
 // Bcrypt Functions
 function generateHash(password) {
@@ -131,8 +132,18 @@ router.post(
 
         // Si il existe un exemplaire de l'email en BDD
         if (user.length == 1) {
+          // On vérifie que le mot de passe est le bon
           let check = checkPassword(password, user[0].password);
           if (check == true) {
+            // Ajout des données dans la session
+            session.username = user[0].username;
+            session.email = user[0].email;
+            session.isWhat = user[0].isWhat;
+            session.lastName = user[0].lastName;
+            session.firstName = user[0].firstName;
+            session.age = user[0].age;
+
+            // On redirige l'utilisateur sur sa page perso
             res.status(200).redirect("/users/myProfile/" + user[0].username);
           } else {
             res.status(404).json({
