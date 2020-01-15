@@ -21,16 +21,24 @@
     <form class="form-inline">
       <ul class="navbar-nav mr-auto rightPart">
 
-        <!-- Uniquement quand le user est connecté -->
-        <!-- <li class="nav-item">
-            <a class="nav-link" href="#">Mon profil</a>
-          </li> -->
+        <% if (session !== "empty") { %>
+        <li class="nav-item">
+          <a class="nav-link pr-4" href="/users/myProfile/<%= session.username %>">Mon profil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/api/users/disconnect">Se déconnecter</a>
+        </li>
+        <% } 
+        else { %>
         <li class="nav-item">
           <a class="nav-link pr-4" href="/users/login/">Connexion</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/users/inscription/">Inscription</a>
         </li>
+        <% } %>
+
+
       </ul>
     </form>
   </div>

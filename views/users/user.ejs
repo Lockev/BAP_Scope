@@ -16,8 +16,7 @@
 </head>
 
 <body>
-
-  <%- include('../includes/navbar'); %>
+  <%- include('../includes/navbar', {session : session}); %>
   <div class="row" style="margin:0">
     <% if (user) { %>
     <div class="card personnal-profile-card">

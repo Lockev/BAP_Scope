@@ -18,8 +18,8 @@ app.use(function(req, res, next) {
   next();
 });
 
-// Config de express session : Une session reste ouverte pendant 6h
-app.use(session({ secret: "v2er56rb5bpojoh8vfv6e6t8b62r98tr6b16tb1P", cookie: { maxAge: 3600000 }, resave: false, saveUninitialized: false }));
+// Config de express session : Une session reste ouverte pendant 30 jours
+app.use(session({ secret: "v2er56rb5bpojoh8vfv6e6t8b62r98tr6b16tb1P", cookie: { maxAge: 2592000000 }, resave: false, saveUninitialized: false }));
 
 app.use(function(req, res, next) {
   req.session.randomInfo = "Lockv";

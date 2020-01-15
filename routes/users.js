@@ -137,11 +137,14 @@ router.post(
           if (check == true) {
             // Ajout des données dans la session
             session.username = user[0].username;
+            session.biography = user[0].biography;
             session.email = user[0].email;
             session.isWhat = user[0].isWhat;
             session.lastName = user[0].lastName;
             session.firstName = user[0].firstName;
             session.age = user[0].age;
+            session.pathToProfilePicture = user[0].pathToProfilePicture;
+            session.job = user[0].job;
 
             // On redirige l'utilisateur sur sa page perso
             res.status(200).redirect("/users/myProfile/" + user[0].username);
@@ -165,6 +168,13 @@ router.post(
     }
   }
 );
+
+// Se déconnecter
+router.get("/disconnect", (req, res) => {
+  req.session.destroy(function(err) {
+    res.status(200).redirect("/users/login/");
+  });
+});
 
 //Modifier un profil
 router.post("/modify/profile/:username", (req, res) => {
