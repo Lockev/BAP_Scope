@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/card2.css">
   <script src="/javascript/script.js"></script>
 
 
@@ -21,7 +22,7 @@
     <div class="row" id="allCards">
       <!-- Appelle toutes les cartes des étudiants par ordre d'inscription -->
       <% for(var i=0; i < users.length; i++) { %>
-      <%- include('../includes/cards', {user: users[i]}); %>
+      <%- include('../includes/cards2', {user: users[i]}); %>
       <% } %>
 
       <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

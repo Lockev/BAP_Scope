@@ -1,0 +1,9 @@
+<div class="card_container">
+  <img src="/img/profilePictures/<%= user.pathToProfilePicture %>"
+    alt="Photo de profil de '<%= user.firstName %> <%= user.lastName %>'">
+  <div class="card">
+    <h1><%= user.firstName %> <%= user.lastName %><span><%= user.job %></span></h1>
+    <p><%= user.biography %></p>
+    <button><a href="/users/search/<%= user.username %>">VOIR LE PROFIL</a></button>
+  </div>
+</div>
