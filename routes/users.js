@@ -136,6 +136,7 @@ router.post(
           let check = checkPassword(password, user[0].password);
           if (check == true) {
             // Ajout des données dans la session
+            session.connected = true;
             session.username = user[0].username;
             session.biography = user[0].biography;
             session.email = user[0].email;
@@ -171,7 +172,19 @@ router.post(
 
 // Se déconnecter
 router.get("/disconnect", (req, res) => {
-  req.session.destroy(function(err) {
+  req.session.regenerate(function(err) {
+    if (err) throw err;
+    session.connected = false;
+    session.username = "empty";
+    session.biography = "empty";
+    session.email = "empty";
+    session.isWhat = "empty";
+    session.lastName = "empty";
+    session.firstName = "empty";
+    session.age = "empty";
+    session.pathToProfilePicture = "empty";
+    session.job = "empty";
+
     res.status(200).redirect("/users/login/");
   });
 });

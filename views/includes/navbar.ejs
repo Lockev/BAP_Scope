@@ -21,7 +21,7 @@
     <form class="form-inline">
       <ul class="navbar-nav mr-auto rightPart">
 
-        <% if (session !== "empty") { %>
+        <% if (session !== "empty" && session.connected == true) { %>
         <li class="nav-item">
           <a class="nav-link pr-4" href="/users/myProfile/<%= session.username %>">Mon profil</a>
         </li>
