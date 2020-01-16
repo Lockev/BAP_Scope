@@ -96,7 +96,7 @@ nav li a:hover {
 /* Cards Container */
 .displayCards {
   margin: 10px 3.5vw;
-  width: calc(60vw - 20px);
+  width: calc(70vw - 20px);
 }
 
 /* Profile Cards */
@@ -133,6 +133,10 @@ nav li a:hover {
   transform: translateX(-50%) translateY(-50%);
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.63);
+}
+
+.profile-card .card-body {
+  padding: 0 1.25rem 1.25rem 1.25rem !important;
 }
 .profile-card .card-text {
   height: 66px;
@@ -232,9 +236,6 @@ input.invalid {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.63);
 }
-.personnal-profile-card .card-body {
-  padding-top: 30px !important;
-}
 
 .personnal-profile-card h5 {
   color: #5793ce;
@@ -280,12 +281,13 @@ input.invalid {
   background-color: #eaa968;
   border-color: #eaa968;
 }
-
-@media only screen and (max-width: 1300px) {
+@media only screen and (max-width: 1700px) {
   .displayCards {
-    margin: 10px 3.5vw;
-    width: calc(70vw - 14px);
+    margin: 10px auto;
+    width: calc(90vw - 14px);
   }
+}
+@media only screen and (max-width: 1300px) {
   .personnal-profile-card {
     width: calc(70vw - 20px);
   }
