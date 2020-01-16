@@ -42,11 +42,11 @@ router.get("/users/all/etudiants", (req, res) => {
         req.session.reload(function(err) {
           if (err) throw err;
           delete data.password;
-          res.status(200).render("users/etudiants", { users: data, session: session });
+          res.status(200).render("users/etudiants", { users: data, session: session, mode: "etudiant" });
         });
       } else {
         delete data.password;
-        res.status(200).render("users/etudiants", { users: data, session: "empty" });
+        res.status(200).render("users/etudiants", { users: data, session: "empty", mode: "etudiant" });
       }
     } else {
       res.status(404).json({
@@ -65,11 +65,11 @@ router.get("/users/all/professionnels", (req, res) => {
         req.session.reload(function(err) {
           if (err) throw err;
           delete data.password;
-          res.status(200).render("users/etudiants", { users: data, session: session });
+          res.status(200).render("users/etudiants", { users: data, session: session, mode: "professionnel" });
         });
       } else {
         delete data.password;
-        res.status(200).render("users/etudiants", { users: data, session: "empty" });
+        res.status(200).render("users/etudiants", { users: data, session: "empty", mode: "professionnel" });
       }
     } else {
       res.status(404).json({

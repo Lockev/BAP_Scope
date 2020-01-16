@@ -22,10 +22,19 @@
 * {
   font-family: Vision;
 }
+
 body {
   background: url("../img/background/backgroundBlue.png") no-repeat center fixed;
   -webkit-background-size: cover; /* pour anciens Chrome et Safari */
   background-size: cover; /* version standardisée */
+}
+
+#backgroundEtudiant {
+  background: url("../img/background/backgroundOrange.png") no-repeat center fixed;
+}
+
+#backgroundProfessionnel {
+  background: url("../img/background/backgroundProfessionnel.png") no-repeat center fixed;
 }
 
 nav {
@@ -53,8 +62,12 @@ nav .rightPart {
 nav li a {
   transition: color 0.1s ease-in-out;
 }
+
 nav li a:hover {
   color: #eaa968 !important;
+}
+#backgroundEtudiant nav .leftPart li a:hover {
+  color: rgba(86, 142, 255, 0.924) !important;
 }
 
 .navbar-toggler {
