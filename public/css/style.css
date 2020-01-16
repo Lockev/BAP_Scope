@@ -162,6 +162,10 @@ label {
   font-size: 17px;
 }
 
+.formSize {
+  height: 270px;
+}
+
 .tab {
   display: none;
 }
@@ -183,7 +187,7 @@ label {
 }
 
 .currentStep {
-  background-color: #4caf50 !important;
+  background-color: #91ec94f3 !important;
 }
 
 input.invalid {
