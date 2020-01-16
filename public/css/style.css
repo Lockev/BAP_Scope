@@ -162,6 +162,34 @@ label {
   font-size: 17px;
 }
 
+.tab {
+  display: none;
+}
+
+.allSteps {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #eeeeee;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 1;
+}
+
+.currentStep {
+  background-color: #4caf50 !important;
+}
+
+input.invalid {
+  background-color: #ffdddd;
+}
+
 /* Page myProfile */
 
 .personnal-profile-card {

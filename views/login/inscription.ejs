@@ -17,66 +17,91 @@
 
 <body>
   <%- include('../includes/navbar', {session : session}); %>
-  <div class="container mt-5">
+  <div class="container mt-3">
     <div class="row">
       <div class="col-lg-6">
         <form action="/api/users/inscription/" method="post">
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>Votre nom :</label>
-                <input type="text" name="lastName" class="form-control" placeholder="Ex : Dupont">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label>Votre prénom :</label>
-                <input type="text" name="firstName" class="form-control" placeholder="Ex : Jean">
-              </div>
+          <div class="row tab">
+            <div class="col-md-12 form-group">
+              <label>Vous êtes un :</label>
+              <select class="form-control" name="isEtudiant">
+                <option value="etudiant">Etudiant</option>
+                <option value="professionnel">Professionnel</option>
+              </select>
             </div>
           </div>
-          <div class="form-group">
-            <label>Votre pseudo :</label>
-            <input type="text" name="username" class="form-control" placeholder="Ex : Lock">
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
+
+          <div class="row tab">
+            <div class="col-md-6">
               <div class="form-group">
-                <label>Vous êtes un :</label>
-                <select class="form-control" name="isEtudiant">
-                  <option value="etudiant">Etudiant</option>
-                  <option value="professionnel">Professionnel</option>
-                </select>
+                <label>Votre e-mail :</label>
+                <input type="text" name="email" class="form-control" placeholder="Ex : example.name@gmail.com">
               </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-md-6">
               <div class="form-group">
                 <label>Votre âge :</label>
                 <input type="number" name="age" class="form-control" placeholder="Ex : 18">
               </div>
             </div>
+
+            <div class="col-md-12 form-group">
+              <label>Votre mot de passe :</label>
+              <input type="password" name="password" class="form-control">
+            </div>
+            <div class="col-md-12 form-group">
+              <label>Confirmez votre mot de passe :</label>
+              <input type="password" name="confirmPassword" class="form-control">
+            </div>
           </div>
-          <div class="form-group">
-            <label>Votre e-mail :</label>
-            <input type="text" name="email" class="form-control" placeholder="Ex : example.name@gmail.com">
+
+          <div class="row tab">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Votre nom :</label>
+                <input type="text" name="lastName" class="form-control" placeholder="Ex : Dupont">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Votre prénom :</label>
+                <input type="text" name="firstName" class="form-control" placeholder="Ex : Jean">
+              </div>
+            </div>
+            <div class="col-md-12 form-group">
+              <label>Votre pseudo :</label>
+              <input type="text" name="username" class="form-control" placeholder="Ex : Lock">
+            </div>
           </div>
-          <div class="form-group">
-            <label>Votre profession / centre d'intérêt :</label>
-            <input type="text" name="job" class="form-control" placeholder="Ex : Artisanat">
+
+          <div class="row tab">
+            <div class="col-md-12 form-group">
+              <label>Votre profession / Vos Etudes :</label>
+              <input type="text" name="job" class="form-control" placeholder="Ex : Artisanat">
+            </div>
+            <div class="col-md-12 form-group">
+              <label>Votre biographie :</label>
+              <textarea type="text" name="biography" class="form-control" rows="3"></textarea>
+            </div>
           </div>
-          <div class="form-group">
-            <label>Votre mot de passe :</label>
-            <input type="password" name="password" class="form-control">
+
+          <div class="allSteps">
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
           </div>
-          <div class="form-group">
-            <label>Confirmez votre mot de passe :</label>
-            <input type="password" name="confirmPassword" class="form-control">
+          <div class="float-left">
+            <button type="button" class="btn btn-primary mb-3" id="boutonPrecedent"
+              onclick="nextStep(-1)">Précédent</button>
           </div>
-          <div class="form-group">
-            <label>Votre biographie :</label>
-            <textarea type="text" name="biography" class="form-control" rows="3"></textarea>
+          <div class="float-right">
+            <button type="button" class="btn btn-primary mb-3" id="boutonSuivant" onclick="nextStep(1)">Suivant</button>
+            <button type="submit" class="btn btn-primary mb-3" value="Upload" id="boutonInscription">Je m'inscris
+              !</button>
           </div>
-          <button type="submit" class="btn btn-primary mb-3" value="Upload">Je m'inscris !</button>
+
+
         </form>
       </div>
     </div>
@@ -92,6 +117,55 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
+
+  <script>
+    let currentTab = 0;
+    displayCurrentTab(currentTab);
+
+    function displayCurrentTab(currentTab) {
+
+      console.log(currentTab)
+      let allTabs = document.getElementsByClassName("tab");
+      allTabs[currentTab].style.display = "flex";
+
+      if (currentTab == 0) {
+        document.getElementById("boutonPrecedent").style.display = "none";
+        document.getElementById("boutonSuivant").style.display = "inline-block";
+        document.getElementById("boutonInscription").style.display = "none";
+      }
+      else if (currentTab == 1 || currentTab == 2) {
+        document.getElementById("boutonPrecedent").style.display = "inline-block";
+        document.getElementById("boutonSuivant").style.display = "inline-block";
+        document.getElementById("boutonInscription").style.display = "none";
+      }
+      else {
+        document.getElementById("boutonPrecedent").style.display = "inline-block";
+        document.getElementById("boutonSuivant").style.display = "none";
+        document.getElementById("boutonInscription").style.display = "inline-block";
+      }
+
+
+      currentStep(currentTab);
+    }
+
+    function currentStep(currentTab) {
+      let allSteps = document.getElementsByClassName("step");
+      let i;
+      for (i = 0; i < allSteps.length; i++) {
+        allSteps[i].className = allSteps[i].className.replace(" currentStep", "");
+      }
+      allSteps[currentTab].className += " currentStep";
+    }
+
+    function nextStep(n) {
+      let allTabs = document.getElementsByClassName("tab");
+      allTabs[currentTab].style.display = "none";
+      currentTab = currentTab + n;
+
+      displayCurrentTab(currentTab);
+
+    }
+  </script>
 </body>
 
 </html>
