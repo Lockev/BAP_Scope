@@ -17,6 +17,9 @@
 
 <body>
   <%- include('../includes/navbar', {session : session}); %>
+  <% if (session !== "empty" && session.connected == true) { %>
+  <%- include('../includes/messages', {session : session}); %>
+  <% } %>
   <div class="row">
     <% if (session) { %>
     <div class="card personnal-profile-card">

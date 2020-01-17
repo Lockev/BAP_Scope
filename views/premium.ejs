@@ -17,13 +17,18 @@
 
 <body>
   <%- include('includes/navbar', {session : session}); %>
-  <div class="leftContainer">
+  <% if (session !== "empty" && session.connected == true) { %>
+  <%- include('includes/messages', {session : session}); %>
+  <% } %>
+  <div class="premiumContainer">
     <h1>Page premium de Scope.</h1>
     <p class="pt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc egestas dapibus ultricies. Praesent
       fermentum
-      sagittis erat, fringilla sodales sapien tempor ut. Quisque mattis quis neque ut eleifend. Morbi blandit consequat
+      sagittis erat, fringilla sodales sapien tempor ut. Quisque mattis quis neque ut eleifend. Morbi blandit
+      consequat
       mi, at blandit enim tempor eu. Aenean ac ultricies mauris. Donec ut congue orci, feugiat pulvinar neque. Integer
       fermentum suscipit dui et vestibulum.</p>
+    <button class="premiumButton"> 7.99 € </button>
   </div>
 
 

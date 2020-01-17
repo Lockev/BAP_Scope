@@ -1,0 +1,83 @@
+<div class="ongletMessage" rel="skp">
+  <!-- class : box -->
+  <div class="ongletMessageName" id="toggleDrop">Mr Duranger
+    <!-- class : nav -->
+    <div class="cross">x</div>
+  </div>
+  <div class="conv" id="conv">
+    <div class="msg_body">
+      <div class="messageSent">Bonjour Monsieur Duranger, je vous envoie ce message pour me renseigner sur vos
+        dispositions, et pour prendre un rendez-vous avec vous.</div>
+      <div class="messageReceived">Bonjour Alexis, je suis ravi de voir que tu t'intéresse à mon profil. Je suis
+        disponible pour un appel téléphonique entre 10h et 17 du lundi au vendredi, et pour un rendez-vous en physique
+        je suis seulement disponible le mercredi de 14h à 18h. Cordialement, Monsieur Duranger </div>
+      <div class="messageSent">Je serais ravi de pouvoir vous voir mercredi prochain dans les alentours de 15h si cela
+        vous arrange. Merci pour votre réponse.</div>
+
+      <div class="msg_push"></div>
+    </div>
+    <div class="msg_footer"><textarea class="msg_input" placeholder="Ecrivez votre message ici ..." rows="4"></textarea>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script type="text/javascript" src="/javascript/anime.js"></script>
+
+<script>
+  $(document).ready(function () {
+
+    let arr = ["skp", "skp1", "skp2", "skp3", "skp4"]; // List of users
+    let isFullyDisplayed = true;
+
+
+    document.getElementById("toggleDrop").addEventListener("click", function () {
+      switch (isFullyDisplayed) {
+        case true:
+          anime({
+            targets: '.ongletMessage',
+            translateY: 250
+          })
+          isFullyDisplayed = false;
+          break;
+        case false:
+          anime({
+            targets: '.ongletMessage',
+            translateY: 0
+          })
+          isFullyDisplayed = true;
+      }
+      console.log(isFullyDisplayed)
+    });
+
+    $('.cross').click(function () {
+
+      var chatbox = $(this).parents().parents().attr("rel");
+      $('[rel="' + chatbox + '"]').hide();
+      arr.splice($.inArray(chatbox, arr), 1);
+      i = 50; // start position
+      j = 260;  //next position
+      $.each(arr, function (index, value) {
+        $('[rel="' + value + '"]').css("messageSent", i);
+        i = i + j;
+      });
+
+      return false;
+    });
+
+    $('textarea').keypress(
+      function (e) {
+
+        if (e.keyCode == 13) {
+          var msg = $(this).val();
+          $(this).val('');
+          if (msg.trim().length != 0) {
+            var chatbox = $(this).parents().parents().parents().attr("rel");
+            $('<div class="messageSent">' + msg + '</div>').insertBefore('[rel="' + chatbox + '"] .msg_push');
+            $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+          }
+        }
+      });
+
+  });
+</script>

@@ -17,6 +17,9 @@
 
 <body>
   <%- include('includes/navbar', {session : session}); %>
+  <% if (session !== "empty" && session.connected == true) { %>
+  <%- include('includes/messages', {session : session}); %>
+  <% } %>
   <div class="leftContainer">
     <h1>Découvrez votre avenir maintenant avec Scope.</h1>
     <p class="pt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc egestas dapibus ultricies. Praesent
