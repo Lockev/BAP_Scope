@@ -5,7 +5,7 @@
     <div class="cross">x</div>
   </div>
   <div class="conv" id="conv">
-    <div class="msg_body">
+    <div class="msg_body" id="msg_body">
       <div class="messageSent">Bonjour Monsieur Duranger, je vous envoie ce message pour me renseigner sur vos
         dispositions, et pour prendre un rendez-vous avec vous.</div>
       <div class="messageReceived">Bonjour Alexis, je suis ravi de voir que tu t'intéresse à mon profil. Je suis
@@ -30,7 +30,7 @@
     let arr = ["skp", "skp1", "skp2", "skp3", "skp4"]; // List of users
     let isFullyDisplayed = true;
 
-
+    // Cacher la div
     document.getElementById("toggleDrop").addEventListener("click", function () {
       switch (isFullyDisplayed) {
         case true:
@@ -50,6 +50,7 @@
       console.log(isFullyDisplayed)
     });
 
+    // Afficher le message envoyé
     $('.cross').click(function () {
 
       var chatbox = $(this).parents().parents().attr("rel");
@@ -65,6 +66,7 @@
       return false;
     });
 
+    // Envoyer le message
     $('textarea').keypress(
       function (e) {
 
@@ -79,5 +81,9 @@
         }
       });
 
+    // Commencer le scrolling depuis le bas 
+    var scrolling = document.getElementById("msg_body");
+    console.log(scrolling)
+    scrolling.scrollTop = scrolling.scrollHeight + 2000;
   });
 </script>

@@ -111,10 +111,18 @@ router.get("/users/myProfile/:username", (req, res) => {
   });
 });
 
+// Modifier une PP
+router.get("/modify/profilePicture/:username", (req, res) => {
+  req.session.reload(function(err) {
+    if (err) throw err;
+    res.status(200).render("login/modifyMyPP", { session: session });
+  });
+});
+
 // Chercher un utilisateur
 router.get("/users/search/:username", (req, res) => {
   sql.query("SELECT * FROM users WHERE username = ?", [req.params.username], (err, result) => {
-    if (err) console.log(err);
+    if (err) throw err;
     // Si il existe un exemplaire du username en BDD
     if (result.length == 1) {
       if (session.username !== undefined) {

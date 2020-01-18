@@ -25,6 +25,8 @@ router.post("/inscription/", (req, res) => {
   biography = validator.escape(req.body.biography);
   firstName = req.body.firstName;
   lastName = req.body.lastName;
+  city = req.body.city;
+  codePostal = req.body.codePostal;
   age = req.body.age;
   job = req.body.job;
   isWhat = req.body.isEtudiant;
@@ -38,7 +40,7 @@ router.post("/inscription/", (req, res) => {
   if (!validator.isEmail(email)) {
     validatorErreurs.email = "Please enter a valid email.";
   }
-  if (!validator.isLength(username, { min: 5, max: 25 })) {
+  if (!validator.isLength(username, { min: 4, max: 25 })) {
     validatorErreurs.usernameLength = "Username must have at least 5 characters, with a maximum of 25.";
   }
   if (!validator.isAlphanumeric(username, "fr-FR")) {
@@ -55,6 +57,18 @@ router.post("/inscription/", (req, res) => {
   }
   if (validator.isEmpty(lastName)) {
     validatorErreurs.lastName = "Please enter a valid lastname.";
+  }
+  if (!validator.isAlpha(city, "fr-FR")) {
+    validatorErreurs.city = "Please enter a valid city.";
+  }
+  if (validator.isEmpty(city)) {
+    validatorErreurs.city = "Please enter a valid city.";
+  }
+  if (!validator.isInt(codePostal)) {
+    validatorErreurs.codePostal = "Please enter a valid postal code.";
+  }
+  if (validator.isEmpty(codePostal)) {
+    validatorErreurs.codePostal = "Please enter a valid postal code.";
   }
   if (validator.isURL(biography)) {
     validatorErreurs.biographyLink = "Links are not allowed in your biography.";
@@ -80,8 +94,8 @@ router.post("/inscription/", (req, res) => {
 
           // Traitement SQL
           sql.query(
-            "INSERT INTO users SET email = ?, username = ?, firstName = ?, lastName = ?, password = ?, biography = ?, age = ?, job = ?, isWhat = ?, pathToProfilePicture = ?, isAdmin = ?, auth_Token = ?, auth_Token_Validity = ?",
-            [email, username, firstName, lastName, hash, biography, age, job, isWhat, profilePictureName, 0, "defaultToken", "0000-00-00"]
+            "INSERT INTO users SET email = ?, username = ?, firstName = ?, lastName = ?, password = ?, biography = ?, age = ?, job = ?, isWhat = ?, city = ?, codePostal = ?, pathToProfilePicture = ?, isAdmin = ?, auth_Token = ?, auth_Token_Validity = ?",
+            [email, username, firstName, lastName, hash, biography, age, job, isWhat, city, codePostal, profilePictureName, 0, "defaultToken", "0000-00-00"]
           );
 
           res.status(200).json("User succesfully added to database.");
@@ -106,75 +120,74 @@ router.post("/inscription/", (req, res) => {
 });
 
 // Login
-router.post(
-  "/login/",
-  // Conditions
-  // HEDDI DELETE
-  (req, res) => {
-    // Paramètres
-    password = req.body.password;
-    email = req.body.email;
+router.post("/login/", (req, res) => {
+  // Paramètres
+  password = req.body.password;
+  email = req.body.email;
 
-    // Validator;
-    let validatorErreurs = {};
-    if (!validator.isLength(password, { min: 5, max: 50 })) {
-      validatorErreurs.password = "Password must have at least 5 characters, with a maximum of 50.";
-    }
-    if (!validator.isEmail(email)) {
-      validatorErreurs.email = "Please enter a valid email.";
-    }
+  // Validator;
+  let validatorErreurs = {};
+  if (!validator.isLength(password, { min: 5, max: 50 })) {
+    validatorErreurs.password = "Password must have at least 5 characters, with a maximum of 50.";
+  }
+  if (!validator.isEmail(email)) {
+    validatorErreurs.email = "Please enter a valid email.";
+  }
 
-    if (Object.entries(validatorErreurs).length === 0) {
-      // Check que l'email est present en BDD
-      sql.query("SELECT * FROM users WHERE email = ?", [email], (req, result) => {
-        let user = [];
-        result.map(ele => user.push(ele));
+  if (Object.entries(validatorErreurs).length === 0) {
+    // Check que l'email est present en BDD
+    sql.query("SELECT * FROM users WHERE email = ?", [email], (req, result) => {
+      let user = [];
+      result.map(ele => user.push(ele));
 
-        // Si il existe un exemplaire de l'email en BDD
-        if (user.length == 1) {
-          // On vérifie que le mot de passe est le bon
-          let check = checkPassword(password, user[0].password);
-          if (check == true) {
-            // Ajout des données dans la session
-            session.connected = true;
-            session.username = user[0].username;
-            session.biography = user[0].biography;
-            session.email = user[0].email;
-            session.isWhat = user[0].isWhat;
-            session.lastName = user[0].lastName;
-            session.firstName = user[0].firstName;
-            session.age = user[0].age;
-            session.pathToProfilePicture = user[0].pathToProfilePicture;
-            session.job = user[0].job;
+      // Si il existe un exemplaire de l'email en BDD
+      if (user.length == 1) {
+        // On vérifie que le mot de passe est le bon
+        let check = checkPassword(password, user[0].password);
+        if (check == true) {
+          // Ajout des données dans la session
+          session.connected = true;
+          session.city = user[0].city;
+          session.codePostal = user[0].codePostal;
+          session.username = user[0].username;
+          session.biography = user[0].biography;
+          session.email = user[0].email;
+          session.isWhat = user[0].isWhat;
+          session.lastName = user[0].lastName;
+          session.firstName = user[0].firstName;
+          session.age = user[0].age;
+          session.pathToProfilePicture = user[0].pathToProfilePicture;
+          session.job = user[0].job;
 
-            // On redirige l'utilisateur sur sa page perso
-            res.status(200).redirect("/users/myProfile/" + user[0].username);
-          } else {
-            res.status(404).json({
-              success: "false",
-              errors: ["Password not matching."]
-            });
-          }
+          // On redirige l'utilisateur sur sa page perso
+          res.status(200).redirect("/users/myProfile/" + user[0].username);
         } else {
           res.status(404).json({
             success: "false",
-            errors: ["Email not found in database."]
+            errors: ["Password not matching."]
           });
         }
-      });
-    } else {
-      res.status(409).json({
-        validatorErreurs
-      });
-    }
+      } else {
+        res.status(404).json({
+          success: "false",
+          errors: ["Email not found in database."]
+        });
+      }
+    });
+  } else {
+    res.status(409).json({
+      validatorErreurs
+    });
   }
-);
+});
 
 // Se déconnecter
 router.get("/disconnect", (req, res) => {
   req.session.regenerate(function(err) {
     if (err) throw err;
     session.connected = false;
+    session.city = "empty";
+    session.codePostal = "empty";
     session.username = "empty";
     session.biography = "empty";
     session.email = "empty";
@@ -219,10 +232,6 @@ router.post("/modify/profile/:username", (req, res) => {
 });
 
 // Modifier une PP
-router.get("/modify/profilePicture/:username", (req, res) => {
-  res.status(200).render("login/modifyMyPP");
-});
-
 router.post("/modify/profilePicture/:username", (req, res) => {
   sql.query("SELECT * FROM users WHERE username = ?", [req.params.username], (err, result) => {
     if (err) throw err;

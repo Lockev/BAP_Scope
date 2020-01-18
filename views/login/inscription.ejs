@@ -73,6 +73,14 @@
                 <label>Votre pseudo :</label>
                 <input type="text" name="username" class="form-control" placeholder="Ex : Lock">
               </div>
+              <div class="col-md-6 form-group">
+                <label>Votre code Postal :</label>
+                <input type="text" name="codePostal" class="form-control" placeholder="Ex : 92380">
+              </div>
+              <div class="col-md-6 form-group">
+                <label>Votre Ville :</label>
+                <input type="text" name="city" class="form-control" placeholder="Ex : Garches">
+              </div>
             </div>
 
             <div class="row tab">
@@ -125,7 +133,6 @@
 
     function displayCurrentTab(currentTab) {
 
-      console.log(currentTab)
       let allTabs = document.getElementsByClassName("tab");
       allTabs[currentTab].style.display = "flex";
 
