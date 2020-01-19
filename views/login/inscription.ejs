@@ -20,7 +20,7 @@
   <div class="container mt-3">
     <div class="row">
       <div class="col-lg-6">
-        <form action="/api/users/inscription/" method="post">
+        <form action="/api/users/inscription/" method="post" id="registerForm">
           <div class="formSize">
             <div class="row tab">
               <div class="col-md-12 form-group">
@@ -68,28 +68,45 @@
             <div class="row tab">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Votre nom :</label>
-                  <input type="text" name="lastName" class="form-control" placeholder="Ex : Dupont">
+                  <label>Votre prénom :</label>
+                  <input type="text" name="firstName" class="form-control" placeholder="Ex : Jean">
+                  <div class="invalidEntry" id="invalidEntryFirstName">
+                    <p>Ce prénom n'est pas valide.</p>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Votre prénom :</label>
-                  <input type="text" name="firstName" class="form-control" placeholder="Ex : Jean">
+                  <label>Votre nom :</label>
+                  <input type="text" name="lastName" class="form-control" placeholder="Ex : Dupont">
+                  <div class="invalidEntry" id="invalidEntryLastName">
+                    <p>Ce nom n'est pas valide.</p>
+                  </div>
                 </div>
               </div>
+
               <div class="col-md-12 form-group">
                 <label>Votre pseudo :</label>
                 <input type="text" name="username" class="form-control" placeholder="Ex : Lock">
-              </div>
-              <div class="col-md-6 form-group">
-                <label>Votre code Postal :</label>
-                <input type="text" name="codePostal" class="form-control" placeholder="Ex : 92380">
+                <div class="invalidEntry" id="invalidEntryUsername">
+                  <p>Ce pseudonyme n'est pas valide.</p>
+                </div>
               </div>
               <div class="col-md-6 form-group">
                 <label>Votre Ville :</label>
                 <input type="text" name="city" class="form-control" placeholder="Ex : Garches">
+                <div class="invalidEntry" id="invalidEntryCity">
+                  <p>Ce nom de ville n'est pas valide.</p>
+                </div>
               </div>
+              <div class="col-md-6 form-group">
+                <label>Votre code Postal :</label>
+                <input type="text" name="codePostal" class="form-control" placeholder="Ex : 92380">
+                <div class="invalidEntry" id="invalidEntryCodePostal">
+                  <p>Le code postal donné n'est pas valide.</p>
+                </div>
+              </div>
+
             </div>
 
             <div class="row tab">
@@ -115,7 +132,8 @@
           </div>
           <div class="float-right">
             <button type="button" class="btn btn-primary mb-3" id="boutonSuivant" onclick="nextStep(1)">Suivant</button>
-            <button type="submit" class="btn btn-primary mb-3" value="Upload" id="boutonInscription">Je m'inscris
+            <button type="submit" class="btn btn-primary mb-3" value="Upload" id="boutonInscription"
+              onkeypress="return event.keyCode!=13">Je m'inscris
               !</button>
           </div>
 
@@ -179,6 +197,7 @@
       let allTabs = document.getElementsByClassName("tab");
       let allInputs = allTabs[currentTab].getElementsByTagName("input");
       let validation = true;
+      resetErrors()
 
       for (i = 0; i < allInputs.length; i++) {
         if (allInputs[i].value == "" && currentTab >= 1) {
@@ -188,7 +207,6 @@
         if (allInputs[i].name == "email" && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(allInputs[i].value)) {
           document.getElementById("invalidEntryEmail").className += " displayError";
           allInputs[i].className += " invalid";
-          console.log(allInputs[i].className)
           validation = false;
         }
         if (allInputs[i].name == "age" && allInputs[i].value < 13) {
@@ -201,20 +219,69 @@
           allInputs[i].className += " invalid";
           validation = false;
         }
+        if (allInputs[i].name == "firstName" && !/^[a-z ,.'-]+$/i.test(allInputs[i].value)) {
+          document.getElementById("invalidEntryFirstName").className += " displayError";
+          allInputs[i].className += " invalid";
+          validation = false;
+        }
+        if (allInputs[i].name == "lastName" && !/^[a-z ,.'-]+$/i.test(allInputs[i].value)) {
+          document.getElementById("invalidEntryLastName").className += " displayError";
+          allInputs[i].className += " invalid";
+          validation = false;
+        }
+        if (allInputs[i].name == "username" && !/^(?=.{5,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/.test(allInputs[i].value)) {
+          document.getElementById("invalidEntryUsername").className += " displayError";
+          allInputs[i].className += " invalid";
+          validation = false;
+        }
+        if (allInputs[i].name == "city" && !/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(allInputs[i].value)) {
+          document.getElementById("invalidEntryCity").className += " displayError";
+          allInputs[i].className += " invalid";
+          validation = false;
+        }
+        if (allInputs[i].name == "codePostal" && !/^(([0-8][0-9])|(9[0-5]))[0-9]{3}$/.test(allInputs[i].value)) {
+          document.getElementById("invalidEntryCodePostal").className += " displayError";
+          allInputs[i].className += " invalid";
+          validation = false;
+        }
+
       }
       return validation;
+    }
+
+    function resetErrors() {
+      document.getElementById("invalidEntryEmail").className = document.getElementById("invalidEntryEmail").className.replace(" displayError", "");
+      document.getElementById("invalidEntryAge").className = document.getElementById("invalidEntryAge").className.replace(" displayError", "");
+      document.getElementById("invalidEntryConfirmPassword").className = document.getElementById("invalidEntryConfirmPassword").className.replace(" displayError", "");
+      document.getElementById("invalidEntryFirstName").className = document.getElementById("invalidEntryFirstName").className.replace(" displayError", "");
+      document.getElementById("invalidEntryLastName").className = document.getElementById("invalidEntryLastName").className.replace(" displayError", "");
+      document.getElementById("invalidEntryUsername").className = document.getElementById("invalidEntryUsername").className.replace(" displayError", "");
+      document.getElementById("invalidEntryCity").className = document.getElementById("invalidEntryCity").className.replace(" displayError", "");
+      document.getElementById("invalidEntryCodePostal").className = document.getElementById("invalidEntryCodePostal").className.replace(" displayError", "");
     }
 
     function nextStep(n) {
       let allTabs = document.getElementsByClassName("tab");
       // On bloque l'avancée si un champ n'est pas correctement rempli
       if (n == 1 && !validation()) return false;
+
       allTabs[currentTab].style.display = "none";
       currentTab = currentTab + n;
 
       displayCurrentTab(currentTab);
-
     }
+
+    document.onkeypress = function (e) {
+      var key = e.charCode || e.keyCode || 0;
+      if (key == 13 && currentTab !== 3) {
+        e.preventDefault();
+        if (validation()) {
+          nextStep(1);
+        }
+      }
+    }
+
+
   </script>
 </body>
 
