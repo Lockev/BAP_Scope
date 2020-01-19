@@ -180,10 +180,11 @@ nav li a:hover {
 label {
   color: #fff;
   font-size: 17px;
+  margin: 0 8px -5px 0;
 }
 
 .formSize {
-  height: 270px;
+  height: auto;
 }
 
 .tab {
@@ -196,10 +197,10 @@ label {
 }
 
 .step {
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #eeeeee;
+  height: 10px;
+  width: 10px;
+  margin: 5px 20px;
+  background-color: #fff;
   border: none;
   border-radius: 50%;
   display: inline-block;
@@ -207,11 +208,44 @@ label {
 }
 
 .currentStep {
-  background-color: #91ec94f3 !important;
+  height: 20px;
+  width: 20px;
+  margin: 0px 20px;
+}
+
+.form-control {
+  border-radius: 5px;
+}
+
+.btn-primary {
+  color: #3366cc;
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #eaa968;
+  border-color: rgb(234, 169, 104);
+}
+
+input {
+  padding: 2px 5px 0px 2px;
 }
 
 input.invalid {
   background-color: #ffdddd;
+}
+
+.invalidEntry {
+  display: none;
+  margin-top: 5px;
+  font-size: 85%;
+  color: rgb(218, 155, 155);
+}
+
+.displayError {
+  display: block;
 }
 
 /* Page myProfile */
@@ -485,10 +519,12 @@ input.invalid {
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: rgba(85, 85, 85, 0.6);
 }
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   background-color: #f5f5f5;
 }

@@ -37,12 +37,18 @@
                 <div class="form-group">
                   <label>Votre e-mail :</label>
                   <input type="text" name="email" class="form-control" placeholder="Ex : example.name@gmail.com">
+                  <div class="invalidEntry" id="invalidEntryEmail">
+                    <p>L'adresse email saisie n'est pas valide.</p>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Votre âge :</label>
                   <input type="number" name="age" class="form-control" placeholder="Ex : 18">
+                  <div class="invalidEntry" id="invalidEntryAge">
+                    <p>Vous devez avoir au minimum 13 ans pour vous inscrire sur Scope.</p>
+                  </div>
                 </div>
               </div>
 
@@ -53,6 +59,9 @@
               <div class="col-md-12 form-group">
                 <label>Confirmez votre mot de passe :</label>
                 <input type="password" name="confirmPassword" class="form-control">
+                <div class="invalidEntry" id="invalidEntryConfirmPassword">
+                  <p>Les deux mots de passes donnés ne coincident pas.</p>
+                </div>
               </div>
             </div>
 
@@ -152,7 +161,6 @@
         document.getElementById("boutonInscription").style.display = "inline-block";
       }
 
-
       currentStep(currentTab);
     }
 
@@ -167,8 +175,40 @@
       }
     }
 
+    function validation() {
+      let allTabs = document.getElementsByClassName("tab");
+      let allInputs = allTabs[currentTab].getElementsByTagName("input");
+      let validation = true;
+
+      for (i = 0; i < allInputs.length; i++) {
+        if (allInputs[i].value == "" && currentTab >= 1) {
+          allInputs[i].className += " invalid";
+          validation = false;
+        }
+        if (allInputs[i].name == "email" && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(allInputs[i].value)) {
+          document.getElementById("invalidEntryEmail").className += " displayError";
+          allInputs[i].className += " invalid";
+          console.log(allInputs[i].className)
+          validation = false;
+        }
+        if (allInputs[i].name == "age" && allInputs[i].value < 13) {
+          document.getElementById("invalidEntryAge").className += " displayError";
+          allInputs[i].className += " invalid";
+          validation = false;
+        }
+        if (allInputs[i].name == "confirmPassword" && allInputs[i].value !== allInputs[i - 1].value) {
+          document.getElementById("invalidEntryConfirmPassword").className += " displayError";
+          allInputs[i].className += " invalid";
+          validation = false;
+        }
+      }
+      return validation;
+    }
+
     function nextStep(n) {
       let allTabs = document.getElementsByClassName("tab");
+      // On bloque l'avancée si un champ n'est pas correctement rempli
+      if (n == 1 && !validation()) return false;
       allTabs[currentTab].style.display = "none";
       currentTab = currentTab + n;
 
