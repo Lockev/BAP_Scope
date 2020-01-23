@@ -20,13 +20,22 @@
   <% if (session !== "empty" && session.connected == true) { %>
   <%- include('includes/messages', {session : session}); %>
   <% } %>
-  <div class="leftContainer">
+  <div class="leftContainer text-center">
     <h1>Découvrez votre avenir maintenant avec Scope.</h1>
-    <p class="pt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc egestas dapibus ultricies. Praesent
-      fermentum
-      sagittis erat, fringilla sodales sapien tempor ut. Quisque mattis quis neque ut eleifend. Morbi blandit consequat
-      mi, at blandit enim tempor eu. Aenean ac ultricies mauris. Donec ut congue orci, feugiat pulvinar neque. Integer
-      fermentum suscipit dui et vestibulum.</p>
+    <p class="pt-4 text-center" style="font-size: 18px;">
+      Bienvenue sur SCOPE, la plateforme qui met en relation des professionnels et des étudiants pour aider ces derniers
+      à trouver une
+      voie qui leur plaît.<br>
+      Chez SCOPE, nous pensons qu'il est primordial de se renseigner avant de choisir son orientation. Nous mettons un
+      point d'honneur à vous faire découvrir les métiers artisanaux qui font rayonner le savoir-faire français.
+      Professionnels et étudiants prennent contact afin d'organiser des journées découvertes en partageant leurs
+      passions.
+    </p>
+    <h1 class="mt-5 mb-5">Qui êtes-vous ?</h1>
+    <div class="row">
+      <div class="col-sm-6"><a href="/users/inscription/"><button class="indexButton">Etudiant</button></a></div>
+      <div class="col-sm-6"><a href="/users/inscription/"><button class="indexButton">Professionnel</button></a></div>
+    </div>
   </div>
 
 

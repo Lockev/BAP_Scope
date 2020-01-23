@@ -112,7 +112,7 @@ router.get("/users/myProfile/:username", (req, res) => {
 });
 
 // Modifier une PP
-router.get("/modify/profilePicture/:username", (req, res) => {
+router.get("/users/modify/profilePicture/:username", (req, res) => {
   req.session.reload(function(err) {
     if (err) throw err;
     res.status(200).render("login/modifyMyPP", { session: session });
@@ -145,7 +145,7 @@ router.get("/users/search/:username", (req, res) => {
 });
 
 //Modifier un profil
-router.get("/modify/profile/:username", (req, res) => {
+router.get("/users/modify/profile/:username", (req, res) => {
   sql.query("SELECT * FROM users WHERE username = ?", [req.params.username], (err, result) => {
     if (err) console.log(err);
 

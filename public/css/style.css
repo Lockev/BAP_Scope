@@ -85,6 +85,18 @@ nav li a:hover {
   margin: 20px calc(10vw + 15px);
   width: calc(60vw - 20px);
   color: #fff;
+  margin-top: 8%;
+}
+
+.indexButton {
+  width: 75%;
+  justify-content: center;
+  padding: 10px 15px 7px 15px;
+  border-radius: 25px;
+  border: 1px solid #fff;
+  font-size: 22px;
+  color: #3366ccdc;
+  cursor: pointer;
 }
 
 .leftContainer p {
@@ -367,21 +379,21 @@ input.invalid {
   max-width: 300px;
   min-width: 250px;
   background: white;
-  border-radius: 3px 3px 0px 0px;
+  border-radius: 8px 8px 0px 0px;
   transition: 0.3s ease-out;
 }
 
 .ongletMessage .ongletMessageName {
-  background: #5793ce;
+  background: #3366ccef;
   color: #eee;
   padding: 8px 8px 4px 8px;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 3px 3px 0px 0px;
+  border-radius: 8px 8px 0px 0px;
 }
 
 .ongletMessage .msg_body {
-  border: 2px solid #5793ce;
+  border: 2px solid #ddd;
   background: #fff;
   height: 200px;
   font-size: 12px;
@@ -393,7 +405,7 @@ input.invalid {
 .ongletMessage .msg_input {
   width: 100%;
   height: 55px;
-  border: 2px solid #5793ce;
+  border: 2px solid #ddd;
   border-top: 0px solid #ccc;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;

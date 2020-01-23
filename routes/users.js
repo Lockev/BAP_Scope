@@ -263,7 +263,7 @@ router.post("/modify/profilePicture/:username", (req, res) => {
     form.on("file", function(name, file) {
       if (isUploaded == true) {
         console.log("Uploaded " + file.name);
-        res.redirect("../../login/");
+        res.redirect("/users/login/");
       } else {
         console.log("Canceled upload of " + file.name);
       }

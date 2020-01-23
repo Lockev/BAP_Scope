@@ -26,7 +26,7 @@
       mi, at blandit enim tempor eu. Aenean ac ultricies mauris. Donec ut congue orci, feugiat pulvinar neque. Integer
       fermentum suscipit dui et vestibulum.</p>
 
-    <form action="" enctype="multipart/form-data" method="post">
+    <form action="/api/users/modify/profilePicture/<%= session.username %>" enctype="multipart/form-data" method="post">
       <div class="row">
         <div class="col-sm-6"><input type="file" class="customFileInput" name="upload"></div>
         <div class="col-sm-6"><button class="sendPPButton" type="submit">Mettre en ligne !</button></div>
