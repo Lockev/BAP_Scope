@@ -74,7 +74,6 @@ router.post("/inscription/", (req, res) => {
     validatorErreurs.biographyLink = "Links are not allowed in your biography.";
   }
   if (isWhat !== "etudiant" && isWhat !== "professionnel") {
-    console.log(isWhat);
     validatorErreurs.UserType = "You can only be an `etudiant` or a `professionnel`.";
   }
   if (age == undefined || age <= 13) {
@@ -219,7 +218,6 @@ router.post("/modify/profile/:username", (req, res) => {
   if (Object.entries(validatorErreurs).length === 0) {
     // Traitement SQL
     sql.query("UPDATE users SET biography = ?, age = ? WHERE username = ?", [biography, age, req.params.username], (err, result) => {
-      console.log(age);
       if (err) throw err;
       var user = result[0];
       res.redirect("/users/login/");
